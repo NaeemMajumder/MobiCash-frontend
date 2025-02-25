@@ -19,11 +19,11 @@
 }
 
 .active {
-  color: #196cf2;
+  color: #216580;
   background-color: transparent;
 }
 
-.logo {
+.gradient-text {
   background: linear-gradient(
     120deg,
     #092648,
@@ -37,4 +37,34 @@
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Add this custom CSS */
+.gradient-border {
+  border: 2px solid transparent;
+  border-image: linear-gradient(
+      120deg,
+      #092648,
+      #092648,
+      #226883,
+      #53decd,
+      #eb40bf,
+      #a33b69,
+      #092648,
+      #092648
+    )
+    1;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.gradient-background {
+  background: linear-gradient(
+    0deg,
+    #226883,
+    #53decd
+  );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

@@ -1,16 +1,17 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const Nav = () => {
   let links = (
     <>
       <li>
-        <a>Item 1</a>
+        <NavLink to='/'>Home</NavLink>
       </li>
       <li>
-        <a>Parent</a>
+        <NavLink to='/'>Home</NavLink>
       </li>
       <li>
-        <a>Item 3</a>
+        <NavLink to='/'>Home</NavLink>
       </li>
     </>
   );
@@ -42,7 +43,7 @@ const Nav = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow gap-2"
               >
                 {/* This links for mobile devices */}
                 {links}
@@ -54,17 +55,17 @@ const Nav = () => {
                 className="rounded-full w-[50px]"
                 alt=""
               />
-              <span className="plusJakarta font-black text-2xl logo">MobiCash</span>
+              <span className="plusJakarta font-black text-2xl gradient-text">MobiCash</span>
             </a>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu font-medium menu-horizontal px-1">
+            <ul className="menu font-medium menu-horizontal px-1 gap-2">
               {/* This links for large devices */}
               {links}
             </ul>
           </div>
           <div className="navbar-end">
-            <a className="btn">Button</a>
+            <Link to={'/login'} className="btn gradient-text gradient-border">SIGN IN</Link>
           </div>
         </div>
       </section>
