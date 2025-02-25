@@ -60,7 +60,7 @@ const Register = () => {
             <div className="flex max-w-5xl w-full bg-white p-8 rounded-xl shadow-2xl gap-4">
                 {/* Left Side: Registration Form */}
                 <div className="w-full lg:w-1/2 space-y-6">
-                    <h2 className="text-3xl font-extrabold text-center text-[#164193]">Register for an Account</h2>
+                    <h2 className="text-3xl font-extrabold text-center text-[#0A294A]">Register for an Account</h2>
                     <form onSubmit={handleRegister} className="space-y-4">
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
@@ -112,8 +112,8 @@ const Register = () => {
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
                             >
                                 <option disabled>Select Role</option>
-                                <option value="agent">Agent</option>
                                 <option value="user">User</option>
+                                <option value="agent">Agent</option>
                             </select>
                             {formErrors.role && <p className="text-sm text-red-500">{formErrors.role}</p>}
                         </div>
