@@ -1,11 +1,11 @@
 import React from 'react';
-import HeroArea from '../../header/HeroArea';
+import HeroSlider from '../../header/HeroSlider';
 
 const Main = () => {
     return (
         <>
             <section>
-                <HeroArea/>
+                <HeroSlider/>
             </section>
         </>
     );

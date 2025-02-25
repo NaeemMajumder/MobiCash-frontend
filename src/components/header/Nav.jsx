@@ -48,7 +48,14 @@ const Nav = () => {
                 {links}
               </ul>
             </div>
-            <a className="btn btn-ghost text-xl">daisyUI</a>
+            <a className="flex justify-center items-center gap-2 text-xl">
+              <img
+                src="/images/logo.png"
+                className="rounded-full w-[50px]"
+                alt=""
+              />
+              <span className="plusJakarta font-black text-2xl logo">MobiCash</span>
+            </a>
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu font-medium menu-horizontal px-1">

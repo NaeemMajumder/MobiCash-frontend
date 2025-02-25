@@ -1,11 +1,11 @@
 import React from 'react';
 
-const HeroArea = () => {
+const HeroSlider = () => {
     return (
         <div>
-            hero area
+            hero slider
         </div>
     );
 };
 
-export default HeroArea;
+export default HeroSlider;

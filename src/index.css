@@ -1,25 +1,40 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
-.plusJakarta{
-    font-family: "Plus Jakarta Sans", serif;
+.plusJakarta {
+  font-family: "Plus Jakarta Sans", serif;
 }
 
-.inter{
-    font-family: "Inter", serif;
+.inter {
+  font-family: "Inter", serif;
 }
 
-.width{
-    max-width: 1350px;
-    margin: 0 auto;
+.width {
+  max-width: 1350px;
+  margin: 0 auto;
 }
 
-.active{
-    color: #196CF2;
-    background-color: transparent;
+.active {
+  color: #196cf2;
+  background-color: transparent;
+}
+
+.logo {
+  background: linear-gradient(
+    120deg,
+    #092648,
+    #092648,
+    #226883,
+    #53decd,
+    #eb40bf,
+    #a33b69,
+    #092648,
+    #092648
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
