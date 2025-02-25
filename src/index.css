@@ -2,10 +2,24 @@
 @plugin "daisyui";
 
 
+*{
+    box-sizing: border-box;
+}
+
 .plusJakarta{
     font-family: "Plus Jakarta Sans", serif;
 }
 
 .inter{
     font-family: "Inter", serif;
+}
+
+.width{
+    max-width: 1350px;
+    margin: 0 auto;
+}
+
+.active{
+    color: #196CF2;
+    background-color: transparent;
 }
