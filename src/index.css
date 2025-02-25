@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+
+.plusJakarta{
+    font-family: "Plus Jakarta Sans", serif;
+}
+
+.inter{
+    font-family: "Inter", serif;
+}
