@@ -111,7 +111,7 @@ const Login = () => {
                 Forgot your password?
               </Link>
               <span  >
-                Don't have an account? <Link to="/register" className="hover:text-indigo-500">Register</Link>
+                Don't have an account? <Link to="/register" className="text-indigo-500">Register</Link>
               </span>
             </div>
 
