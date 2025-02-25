@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import 'react-phone-number-input/style.css';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import { Link } from 'react-router-dom';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'; // Importing the eye icons
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const Register = () => {
     const [number, setNumber] = useState('');
     const [image, setImage] = useState(null);
     const [formErrors, setFormErrors] = useState({});
-    const [pinVisible, setPinVisible] = useState(false); // State to toggle pin visibility
+    const [pinVisible, setPinVisible] = useState(false);
 
     const validateForm = (formData) => {
         const errors = {};
@@ -43,7 +43,6 @@ const Register = () => {
         } else {
             newUserInfo.amount = 100000;
         }
-
         console.log(newUserInfo);
     };
 
