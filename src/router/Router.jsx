@@ -10,6 +10,7 @@ import SendMoney from "../components/main/sendMoney/SendMoney";
 import CashOut from "../components/main/cashOut/CashOut";
 import CashIn from "../agentComponents/cashIn/CashIn";
 import WithdrawBalance from "../agentComponents/withdrawBalance/WithdrawBalance";
+import DashBoard from "../components/dashboard/DashBoard";
 
 export const Router = createBrowserRouter([
     {
@@ -58,6 +59,10 @@ export const Router = createBrowserRouter([
                 element: <OTP/>
             },
         ]
+    },
+    {
+        path:"/dashboard",
+        element:<DashBoard/>
     },
     {
         path:"*",
