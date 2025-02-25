@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../provider/AuthProvider';
 
 const AuthProviderHook = () => {
-    return (
-        <div>
-            auth provider hook
-        </div>
-    );
+    const context = useContext(AuthContext);
+    return context;
 };
 
 export default AuthProviderHook;
