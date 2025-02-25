@@ -6,6 +6,7 @@ import Register from "../components/main/authForm/Register";
 import Login from "../components/main/authForm/Login";
 import OTP from "../demo/OTP";
 import Services from "../components/main/services/Services";
+import SendMoney from "../components/main/sendMoney/SendMoney";
 
 export const Router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ export const Router = createBrowserRouter([
             {
                 path:'/services',
                 element: <Services/>
+            },
+            {
+                path:'/sendMoney',
+                element: <SendMoney/>
             },
             {
                 path:'/otp',
