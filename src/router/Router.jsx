@@ -4,6 +4,8 @@ import Error from "../error/Error";
 import Main from "../components/main/homePage/Main";
 import Register from "../components/main/authForm/Register";
 import Login from "../components/main/authForm/Login";
+import OTP from "../demo/OTP";
+import Services from "../components/main/services/Services";
 
 export const Router = createBrowserRouter([
     {
@@ -22,6 +24,14 @@ export const Router = createBrowserRouter([
             {
                 path:'/login',
                 element: <Login/>
+            },
+            {
+                path:'/services',
+                element: <Services/>
+            },
+            {
+                path:'/otp',
+                element: <OTP/>
             },
         ]
     },

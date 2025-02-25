@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Card = ({ item }) => {
+const ServicesCard = ({ item }) => {
   console.log(item);
   return (
     <>
-      <div className="max-w-xs w-full text-center bg-white rounded-lg shadow-md overflow-hidden">
+      <Link to={item.link} className="max-w-xs w-full text-center bg-white rounded-lg shadow-md overflow-hidden">
         {/* Product Image */}
         <img
           className="w-full h-56 object-contain"
@@ -23,15 +24,10 @@ const Card = ({ item }) => {
           <p className="text-sm mb-6 text-gray-600">
            {item.description}
           </p>
-
-          {/* Learn More Button */}
-          <div className="text-center">
-            <button className="button cursor-pointer">Book a Call</button>
-          </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };
 
-export default Card;
+export default ServicesCard;

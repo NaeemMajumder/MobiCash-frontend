@@ -1,0 +1,42 @@
+import React from "react";
+import ServicesCard from "../homePage/services/ServicesCard";
+
+const Services = () => {
+  const demoData = [
+    {
+      id: 1,
+      title: "Send Money",
+      description:
+        "Send money from MobiCash to any number instantly",
+      imageUrl:
+        "../../../../public/images/send-money.png",
+        link:'/sendMoney'
+    },
+    {
+      id: 2,
+      title: "Cash Out",
+      description: "Withdraw cash anytime from the largest agent and ATM network of Bangladesh",
+      imageUrl:
+        "../../../../public/images/cash-out.png",
+        link:'/cashOut'
+    },
+  ];
+  return (
+    <>
+    <div className="w-full bg-[#F2F6FE]">
+    <section className="width">
+        <h1 className="text-4xl text-center py-20 font-bold text-[#0A294A] plusJakarta">
+          Select a Service
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8 px-6 justify-items-center items-center pb-32">
+          {demoData.map((item, index) => (
+            <ServicesCard key={index} item={item} />
+          ))}
+        </div>
+      </section>
+    </div>
+    </>
+  );
+};
+
+export default Services;

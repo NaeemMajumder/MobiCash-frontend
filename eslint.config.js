@@ -8,7 +8,6 @@ export default [
   { ignores: ['dist'] },
   {
     files: ['**/*.{js,jsx}'],
-    node: true,
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -35,6 +34,7 @@ export default [
         { allowConstantExport: true },
       ],
       'no-unused-vars':"off",
+      'react/prop-types':"off",
     },
   },
 ]

@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import "react-phone-number-input/style.css";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
-import { Link } from "react-router-dom"; // Assuming you are using React Router for navigation
+import { Link, useNavigate } from "react-router-dom"; // Assuming you are using React Router for navigation
+import AuthProviderHook from "../../../customHooks/AuthProviderHook";
 
 const Login = () => {
   const [authMethod, setAuthMethod] = useState("email"); // Tracks selected auth method (email or phone)
   const [inputValue, setInputValue] = useState(""); // Tracks email or phone number input
   const [pinValue, setPinValue] = useState(""); // Tracks PIN input
+  let {
+    setUser,
+    signInUser,
+    handleError,
+  } = AuthProviderHook();
+  const navigate = useNavigate();
 
   // Handle select change
   const handleAuthChange = (event) => {
@@ -25,6 +32,14 @@ const Login = () => {
     console.log(`Auth Method: ${authMethod}`);
     console.log(`Entered Value: ${inputValue}`);
     console.log(`Entered PIN: ${pinValue}`);
+
+    signInUser(inputValue, pinValue)
+      .then((result) => {
+        setUser(result.user);
+        alert("login successfully");
+        navigate("/");
+      })
+      .catch(handleError);
   };
 
   return (

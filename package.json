@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.8",
+    "axios": "^1.7.9",
     "firebase": "^11.3.1",
     "flowbite": "^3.1.2",
     "localforage": "^1.10.0",
-    "lucide-react": "^0.476.0",
     "marquee": "^0.2.1",
     "match-sorter": "^8.0.0",
     "motion": "^12.4.7",
