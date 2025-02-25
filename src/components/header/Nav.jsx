@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import AuthProviderHook from "../../customHooks/AuthProviderHook";
+import { HiEye, HiEyeOff } from "react-icons/hi"; // Import React Icons
 
 const Nav = () => {
+  const [showBalance, setShowBalance] = useState(false);
+  const balance = 50000; // Example balance
   const { user } = AuthProviderHook();
   const links = (
     <>
@@ -81,9 +84,21 @@ const Nav = () => {
             </Link>
 
             <div className="font-bold bg-gray-200 border py-2 px-3 rounded-full flex justify-center items-center gap-2">
-            <img width="20" height="20" src="https://img.icons8.com/external-icongeek26-linear-colour-icongeek26/64/external-Taka-currency-icongeek26-linear-colour-icongeek26-3.png" alt="external-Taka-currency-icongeek26-linear-colour-icongeek26-3"/>
-              
-              <span>50000&#2547;</span>
+              {/* Taka Icon */}
+              <img
+                width="20"
+                height="20"
+                src="https://img.icons8.com/external-icongeek26-linear-colour-icongeek26/64/external-Taka-currency-icongeek26-linear-colour-icongeek26-3.png"
+                alt="Taka Icon"
+              />
+
+              {/* Balance Display (Hidden or Visible) */}
+              <span>{showBalance ? `${balance}৳` : "****"}</span>
+
+              {/* Toggle Eye Button */}
+              <button onClick={() => setShowBalance(!showBalance)}>
+                {showBalance ? <HiEyeOff size={17} /> : <HiEye size={17} />}
+              </button>
             </div>
 
             {/* user profile */}
@@ -126,8 +141,6 @@ const Nav = () => {
                 </div>
               </div>
             </div>
-
-
           </div>
         </div>
       </section>

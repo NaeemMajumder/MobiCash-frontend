@@ -7,6 +7,9 @@ import Login from "../components/main/authForm/Login";
 import OTP from "../demo/OTP";
 import Services from "../components/main/services/Services";
 import SendMoney from "../components/main/sendMoney/SendMoney";
+import CashOut from "../components/main/cashOut/CashOut";
+import CashIn from "../agentComponents/cashIn/CashIn";
+import WithdrawBalance from "../agentComponents/withdrawBalance/WithdrawBalance";
 
 export const Router = createBrowserRouter([
     {
@@ -34,6 +37,22 @@ export const Router = createBrowserRouter([
                 path:'/sendMoney',
                 element: <SendMoney/>
             },
+            {
+                path:'/cashOut',
+                element: <CashOut/>
+            },
+
+            // agent route
+            {
+                path:'/cashIn',
+                element: <CashIn/>
+            },
+            {
+                path:'/withdrawBalance',
+                element: <WithdrawBalance/>
+            },
+
+
             {
                 path:'/otp',
                 element: <OTP/>

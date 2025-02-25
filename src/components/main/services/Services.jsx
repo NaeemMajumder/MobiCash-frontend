@@ -9,7 +9,7 @@ const Services = () => {
       description:
         "Send money from MobiCash to any number instantly",
       imageUrl:
-        "../../../../public/images/send-money.png",
+        "/images/send-money.png",
         link:'/sendMoney'
     },
     {
@@ -17,8 +17,24 @@ const Services = () => {
       title: "Cash Out",
       description: "Withdraw cash anytime from the largest agent and ATM network of Bangladesh",
       imageUrl:
-        "../../../../public/images/cash-out.png",
+        "/images/cash-out.png",
         link:'/cashOut'
+    },
+    {
+      id: 2,
+      title: "Cash In to User",
+      description: "Withdraw cash anytime from the largest agent and ATM network of Bangladesh",
+      imageUrl:
+        "/images/cash-in.png",
+        link:'/cashIn'
+    },
+    {
+      id: 2,
+      title: "Withdraw Balance",
+      description: "Recharge any number and get the best offer",
+      imageUrl:
+        "/images/cash-out.png",
+        link:'/withdrawBalance'
     },
   ];
   return (
