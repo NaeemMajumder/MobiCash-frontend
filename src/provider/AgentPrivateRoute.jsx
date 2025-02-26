@@ -3,15 +3,16 @@ import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 
 const AgentPrivateRoute = ({ children }) => {
-  let { user, loading, userData, setUser, signOutUser, handleError} = useContext(AuthContext);  // Assuming userData contains the role
+  let { user, loading, userData, setUser, signOutUser, handleError } =
+    useContext(AuthContext); // Assuming userData contains the role
   let location = useLocation();
 
   useEffect(() => {
     if (user && user.email && userData?.role !== "Agent") {
-        signOutUser()
+      signOutUser()
         .then(() => {
           setUser(null);
-            alert("login in an AGENT account")
+          alert("login in an AGENT account");
         })
         .catch(handleError);
     }

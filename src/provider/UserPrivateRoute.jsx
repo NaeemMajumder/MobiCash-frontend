@@ -3,15 +3,16 @@ import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 
 const UserPrivateRoute = ({ children }) => {
-  let { user, loading, userData, setUser, signOutUser, handleError} = useContext(AuthContext);  // Assuming userData contains the role
+  let { user, loading, userData, setUser, signOutUser, handleError } =
+    useContext(AuthContext); // Assuming userData contains the role
   let location = useLocation();
 
   useEffect(() => {
     if (user && user.email && userData?.role !== "User") {
-        signOutUser()
+      signOutUser()
         .then(() => {
           setUser(null);
-            alert("login in an ADMIN account")
+          alert("login in an ADMIN account");
         })
         .catch(handleError);
     }
