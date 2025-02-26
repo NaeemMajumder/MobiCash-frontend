@@ -45,7 +45,7 @@ const Register = () => {
 
     axios
       .get(`/public/json/nidData.json`)
-      .then((res) => {
+      .then(async(res) => {
         const nidData = res.data;
         const nidMatched = nidData.find(
           (item) => item.nid_number === newUserInfo.nid
@@ -63,32 +63,57 @@ const Register = () => {
           return;
         }
 
-        console.log(newUserInfo);
 
-        axiosSecure.post('/users', newUserInfo)
-        .then(res=>{
-          console.log(res.data);
-          alert("data sended");
-        })
+
+        // image upload and save the url=================
+        const file = newUserInfo.image;
+        const formDataImage = new FormData();
+        formDataImage.append("image", file);
+
+        const response = await fetch(
+          `https://api.imgbb.com/1/upload?key=${
+            import.meta.env.VITE_IMAGE_HOSTING_KEY
+          }`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const data = await response.json();
+        newUserInfo.image = data.data.display_url;
+        // ===============================================
+        // console.log(newUserInfo);
+
+
+        // axiosSecure.post('/users', newUserInfo)
+        // .then(res=>{
+        //   console.log(res.data);
+        //   alert("data sended");
+        // })
 
 
         // Handle successful registration
-        // registerWithEmail(newUserInfo.email, newUserInfo.pin)
-        //   .then((result) => {
-        //     setUser(result.user);
-        //     updateUserProfile({ displayName: newUserInfo.name })
-        //       .then(async() => {
+        registerWithEmail(newUserInfo.email, newUserInfo.pin)
+          .then((result) => {
+            setUser(result.user);
+            updateUserProfile({ displayName: newUserInfo.name, photoURL: newUserInfo.image })
+              .then(async() => {
 
-        //         // data will go into backend
+                // data will go into backend
+                axiosSecure.post('/users', newUserInfo)
+                .then(res=>{
+                  console.log(res.data);
+                  alert("data sended");
+                })
 
-        //         navigate('/')
-        //         alert("🎉 Welcome to Our Mobile Financial Service! 🎉");
-        //       })
-        //       .catch(error=>{
-        //         console.log(error)
-        //       });
-        //   })
-        //   .catch(handleError);
+                navigate('/')
+                alert("🎉 Welcome to Our Mobile Financial Service! 🎉");
+              })
+              .catch(error=>{
+                console.log(error)
+              });
+          })
+          .catch(handleError);
       })
       .catch(handleError);
   };
