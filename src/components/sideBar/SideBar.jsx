@@ -10,6 +10,7 @@ import {
 import { FaUsers } from "react-icons/fa";
 import { RiPassPendingLine } from "react-icons/ri";
 import { BiMoneyWithdraw } from "react-icons/bi";
+import { GiCash } from "react-icons/gi";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
@@ -113,7 +114,7 @@ const Sidebar = () => {
                   to="/profile/cashRequest"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
-                  <BiMoneyWithdraw className="mr-3" size={24} /> Cash Request
+                  <GiCash className="mr-3" size={24} /> Cash Request
                 </NavLink>
               </li>
             </>
