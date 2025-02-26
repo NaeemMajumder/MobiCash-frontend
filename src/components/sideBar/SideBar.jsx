@@ -10,7 +10,7 @@ import {
 import { FaUsers } from "react-icons/fa";
 import { RiPassPendingLine } from "react-icons/ri";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -29,14 +29,14 @@ const Sidebar = () => {
 
       {/* Full-Screen Sidebar */}
       <div
-        className={`fixed inset-0 w-[350px] h-full p-6 text-white shadow-2xl transition-transform ${
+        className={`fixed inset-0 w-[350px] h-full bg-[#F2F6FE] p-6 text-white shadow-2xl transition-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } z-50`}
       >
         {/* Sidebar Header with Close Button */}
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold gradient-text">
-            <Link to={"/"}>MobiCash</Link>
+            <NavLink to={"/"}>MobiCash</NavLink>
           </h2>
           <button
             onClick={() => setIsOpen(false)}
@@ -50,56 +50,56 @@ const Sidebar = () => {
         <nav className="mt-10">
           <ul className="space-y-6 text-lg font-semibold">
             <li>
-              <Link
+              <NavLink
                 href="/profile"
                 className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
               >
                 <FiUser className="mr-3" size={24} /> My Profile
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 href="/dashboard"
                 className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
               >
                 <FiHome className="mr-3" size={24} /> Dashboard
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 href="/transactions"
                 className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
               >
                 <FiCreditCard className="mr-3" size={24} /> Transactions
-              </Link>
+              </NavLink>
             </li>
 
             <>
               {/* admin routes */}
               <li>
-                <Link
-                  to="/allUsers"
+                <NavLink
+                  to="/profile/allUsers"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
                   <FaUsers className="mr-3" size={24} /> All Users
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
-                  href="/transactions"
+                <NavLink
+                  to="/profile/newAgents"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
                   <RiPassPendingLine className="mr-3" size={24} /> New Agent
                   (Pending)
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
-                  href="/transactions"
+                <NavLink
+                  to="/profile/withdrawRequests"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
                   <BiMoneyWithdraw className="mr-3" size={24} /> WithDraw Requests
-                </Link>
+                </NavLink>
               </li>
             </>
 

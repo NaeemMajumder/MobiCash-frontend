@@ -11,6 +11,9 @@ import CashOut from "../components/main/cashOut/CashOut";
 import CashIn from "../agentComponents/cashIn/CashIn";
 import WithdrawBalance from "../agentComponents/withdrawBalance/WithdrawBalance";
 import DashBoard from "../components/dashboard/DashBoard";
+import AllUsers from "../adminComponents/allUsers/AllUsers";
+import NewAgent from "../adminComponents/newAgentRequest/NewAgent";
+import WithdrawRequest from "../adminComponents/withdrawRequest/WithdrawRequest";
 
 export const Router = createBrowserRouter([
     {
@@ -61,8 +64,23 @@ export const Router = createBrowserRouter([
         ]
     },
     {
-        path:"/dashboard",
-        element:<DashBoard/>
+        path:"/profile",
+        element:<DashBoard/>,
+        children:[
+            // admin route
+            {
+                path:'allUsers',
+                element:<AllUsers/>
+            },
+            {
+                path:'newAgents',
+                element:<NewAgent/>
+            },
+            {
+                path:'withdrawRequests',
+                element:<WithdrawRequest/>
+            },
+        ]
     },
     {
         path:"*",
