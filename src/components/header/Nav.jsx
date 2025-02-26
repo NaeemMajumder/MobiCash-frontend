@@ -79,56 +79,62 @@ const Nav = () => {
 
           {/* Navbar end for Sign In Button */}
           <div className="navbar-end gap-2">
-            <Link to="/login" className="btn gradient-text gradient-border">
-              SIGN IN
-            </Link>
-
-            <div className="font-bold bg-gray-200 border py-2 px-3 rounded-full flex justify-center items-center gap-2">
-              {/* Taka Icon */}
-              <img
-                width="20"
-                height="20"
-                src="https://img.icons8.com/external-icongeek26-linear-colour-icongeek26/64/external-Taka-currency-icongeek26-linear-colour-icongeek26-3.png"
-                alt="Taka Icon"
-              />
-
-              {/* Balance Display (Hidden or Visible) */}
-              <span>{showBalance ? `${balance}৳` : "****"}</span>
-
-              {/* Toggle Eye Button */}
-              <button onClick={() => setShowBalance(!showBalance)}>
-                {showBalance ? <HiEyeOff size={17} /> : <HiEye size={17} />}
-              </button>
-            </div>
-
-            {/* user profile */}
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-10 rounded-full">
+            {user && user?.email ? (
+              <>
+                <div className="font-bold bg-gray-200 border py-2 px-3 rounded-full flex justify-center items-center gap-2">
+                  {/* Taka Icon */}
                   <img
-                    alt="Tailwind CSS Navbar component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    width="20"
+                    height="20"
+                    src="https://img.icons8.com/external-icongeek26-linear-colour-icongeek26/64/external-Taka-currency-icongeek26-linear-colour-icongeek26-3.png"
+                    alt="Taka Icon"
                   />
+
+                  {/* Balance Display (Hidden or Visible) */}
+                  <span>{showBalance ? `${balance}৳` : "****"}</span>
+
+                  {/* Toggle Eye Button */}
+                  <button onClick={() => setShowBalance(!showBalance)}>
+                    {showBalance ? <HiEyeOff size={17} /> : <HiEye size={17} />}
+                  </button>
                 </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
-                <li>
-                  <Link to="/profile" className="justify-between">
-                    DashBoard
-                  </Link>
-                </li>
-                <li>
-                  <a>Logout</a>
-                </li>
-              </ul>
-            </div>
+
+                {/* user profile */}
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS Navbar component"
+                        src={user.photoURL}
+                      />
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                  >
+                    <li>
+                      <Link to="/profile" className="justify-between">
+                        DashBoard
+                      </Link>
+                    </li>
+                    <li>
+                      <a>Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="btn gradient-text gradient-border">
+                  SIGN IN
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>

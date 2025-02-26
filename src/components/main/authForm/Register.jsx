@@ -103,7 +103,6 @@ const Register = () => {
                 axiosSecure.post('/users', newUserInfo)
                 .then(res=>{
                   console.log(res.data);
-                  alert("data sended");
                 })
 
                 navigate('/')
