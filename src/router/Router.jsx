@@ -23,6 +23,9 @@ import WithdrawHistory from "../agentComponents/withdrawHistory/WithdrawHistory"
 import AllWithdraws from "../adminComponents/allWithdraws/AllWithdraws";
 import UserDetails from "../adminComponents/userDetails/UserDetails";
 import PrivateRoute from "../provider/PrivateRoute";
+import AgentPrivateRoute from "../provider/AgentPrivateRoute";
+import AdminPrivateRoute from "../provider/AdminPrivateRoute";
+import UserPrivateRoute from "../provider/UserPrivateRoute";
 
 export const Router = createBrowserRouter([
     {
@@ -44,7 +47,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path:'/services',
-                element: <PrivateRoute><Services/></PrivateRoute>
+                element: <PrivateRoute><UserPrivateRoute><Services/></UserPrivateRoute></PrivateRoute>
             },
             {
                 path:'/sendMoney',
