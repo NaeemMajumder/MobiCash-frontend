@@ -130,8 +130,8 @@ const Nav = () => {
                 className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 shadow"
               >
                 <div className="card-body">
-                  <span className="text-lg font-bold">{user.email}</span>
-                  <span className="text-lg font-bold">{user.name}</span>
+                  <span className="text-lg font-bold">{user?.email}</span>
+                  <span className="text-lg font-bold">{user?.name}</span>
                   <span className="text-info">Subtotal: $999</span>
                   <div className="card-actions">
                     <button className="btn btn-primary btn-block">

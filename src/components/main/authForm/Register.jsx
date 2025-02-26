@@ -55,8 +55,6 @@ const Register = () => {
         if (!nidMatched) {
           alert("NID does not match any record.");
           return;
-        } else {
-          alert("NID matched successfully");
         }
 
         // Proceed with form submission
@@ -66,73 +64,25 @@ const Register = () => {
           return;
         }
 
-        // Handle successful registration
-        if (newUserInfo.role === "user") {
-          newUserInfo.amount = 40;
-        } else {
-          newUserInfo.amount = 100000;
-        }
         console.log(newUserInfo);
 
-        registerWithEmail(newUserInfo.email, newUserInfo.pin)
-          .then((result) => {
-            setUser(result.user);
-            updateUserProfile({ displayName: newUserInfo.name })
-              .then(async() => {
+        // Handle successful registration
+        // registerWithEmail(newUserInfo.email, newUserInfo.pin)
+        //   .then((result) => {
+        //     setUser(result.user);
+        //     updateUserProfile({ displayName: newUserInfo.name })
+        //       .then(async() => {
 
+        //         // data will go into backend
 
-
-
-
-
-
-                // ========================================================================
-                // // Step 3: Link the phone number with the user's account
-                // const appVerifier =new RecaptchaVerifier(
-                //   "recaptcha-container",
-                //   {
-                //     size: "invisible",
-                //   }
-                // );
-                // const phoneCredential = await linkWithPhoneNumber(auth, newUserInfo.phone, appVerifier);
-                // console.log("all right");
-                // console.log(phoneCredential)
-                // navigate("/otp")
-
-                // try {
-                //     // ✅ Ensure reCAPTCHA is initialized only once
-                //     if (!window.recaptchaVerifier) {
-                //       window.recaptchaVerifier = new RecaptchaVerifier("recaptcha-container", {
-                //         size: "invisible",
-                //       });
-                //     }
-                
-                //     const appVerifier = window.recaptchaVerifier;
-                
-                //     // ✅ Send OTP to Phone Number
-                //     const phoneCredential = await linkWithPhoneNumber(auth.currentUser, newUserInfo.phone, appVerifier);
-                
-                //     console.log("All right, OTP sent!");
-                //     console.log(phoneCredential);
-                
-                //     navigate("/otp");  // Redirect to OTP input page
-                //   } catch (error) {
-                //     console.error("Error linking phone number:", error.message);
-                //   }
-
-                // ======================================================================
-
-
-
-
-                navigate('/')
-                alert("registered");
-              })
-              .catch(error=>{
-                console.log(error)
-              });
-          })
-          .catch(handleError);
+        //         navigate('/')
+        //         alert("🎉 Welcome to Our Mobile Financial Service! 🎉");
+        //       })
+        //       .catch(error=>{
+        //         console.log(error)
+        //       });
+        //   })
+        //   .catch(handleError);
       })
       .catch(handleError);
   };
