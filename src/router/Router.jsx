@@ -22,6 +22,7 @@ import MyTransactions from "../components/myTransaction/MyTransactions";
 import WithdrawHistory from "../agentComponents/withdrawHistory/WithdrawHistory";
 import AllWithdraws from "../adminComponents/allWithdraws/AllWithdraws";
 import UserDetails from "../adminComponents/userDetails/UserDetails";
+import PrivateRoute from "../provider/PrivateRoute";
 
 export const Router = createBrowserRouter([
     {
@@ -43,7 +44,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path:'/services',
-                element: <Services/>
+                element: <PrivateRoute><Services/></PrivateRoute>
             },
             {
                 path:'/sendMoney',
