@@ -181,7 +181,6 @@ const AllUsers = () => {
                               alt="remove-user-female"
                             />
                             <span className="text-red-500 text-sm">{user.status}</span>
-
                           </>
                         )}
                       </span>
