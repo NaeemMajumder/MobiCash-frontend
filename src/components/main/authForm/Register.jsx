@@ -5,12 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AuthProviderHook from "../../../customHooks/AuthProviderHook";
 import axios from "axios";
-import { auth } from "../../../firebase.config";
-import {
-    RecaptchaVerifier,
-    linkWithPhoneNumber,
-    getAuth
-  } from "firebase/auth";
+import UseAxiosSecure, { axiosSecure } from "../../../customHooks/UseAxiosSecure";
+
 
 const Register = () => {
   const [number, setNumber] = useState("");
@@ -22,6 +18,9 @@ const Register = () => {
     const navigate = useNavigate();
 
   const validateForm = (formData) => {
+    const axiosSecure = UseAxiosSecure();
+
+
     const errors = {};
     // Check if required fields are filled
     if (!formData.name) errors.name = "Name is required.";
@@ -65,6 +64,13 @@ const Register = () => {
         }
 
         console.log(newUserInfo);
+
+        axiosSecure.post('/users', newUserInfo)
+        .then(res=>{
+          console.log(res.data);
+          alert("data sended");
+        })
+
 
         // Handle successful registration
         // registerWithEmail(newUserInfo.email, newUserInfo.pin)
