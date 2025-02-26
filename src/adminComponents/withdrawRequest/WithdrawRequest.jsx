@@ -43,6 +43,7 @@ const WithdrawRequest = () => {
         user.withdrawAmount >= withdrawRange[0] &&
         user.withdrawAmount <= withdrawRange[1]
     );
+    
 
   // Pagination Logic
   const totalRequests = filteredRequests.length;
