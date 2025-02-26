@@ -17,6 +17,7 @@ import WithdrawRequest from "../adminComponents/withdrawRequest/WithdrawRequest"
 import AllTransactions from "../adminComponents/allTransaction/AllTransactions";
 import CashRequest from "../agentComponents/cashRequest/CashRequest";
 import CashApprove from "../adminComponents/cashRequestAdmin/CashApprove";
+import MyProfile from "../components/myProfile/MyProfile";
 
 export const Router = createBrowserRouter([
     {
@@ -74,6 +75,10 @@ export const Router = createBrowserRouter([
         path:"/profile",
         element:<DashBoard/>,
         children:[
+            {
+                path:'',
+                element:<MyProfile/>
+            },
             // admin route
             {
                 path:'transactions',
