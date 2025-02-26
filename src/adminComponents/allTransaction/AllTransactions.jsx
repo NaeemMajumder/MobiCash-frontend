@@ -164,6 +164,22 @@ const AllTransactions = () => {
               ))}
             </tbody>
           </table>
+          {/* Pagination */}
+          <div className="mt-4 flex justify-center">
+              {[...Array(Math.ceil(totalTransactions / usersPerPage))].map((_, i) => (
+                <button
+                  key={i}
+                  className={`p-2 mx-1 rounded-md ${
+                    currentPage === i + 1
+                      ? "bg-[#164193] text-white"
+                      : "bg-gray-300"
+                  }`}
+                  onClick={() => setCurrentPage(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
         </div>
       </div>
     </section>
