@@ -77,7 +77,6 @@ export const Router = createBrowserRouter([
         element:<DashBoard/>,
         children:[
             {
-                path:'',
                 element:<MyProfile/>
             },
             // admin route
@@ -105,6 +104,12 @@ export const Router = createBrowserRouter([
             // user route
             {
                 path:'userTransactions',
+                element:<MyTransactions/> // user + agent
+            },
+
+            // agent
+            {
+                path:'withdrawHistory',
                 element:<MyTransactions/>
             },
         ]

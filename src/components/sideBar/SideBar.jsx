@@ -60,13 +60,24 @@ const Sidebar = () => {
             </li>
 
             <>
-              {/* user route */}
+              {/* user route and agent */}
               <li>
                 <NavLink
                   to="/profile/userTransactions"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
                   <FiCreditCard className="mr-3" size={24} /> My All Transactions
+                </NavLink>
+              </li>
+            </>
+
+            <>
+            <li>
+                <NavLink
+                  to="/profile/withdrawHistory"
+                  className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                >
+                  <FiCreditCard className="mr-3" size={24} /> Withdraw History
                 </NavLink>
               </li>
             </>
