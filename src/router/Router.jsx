@@ -21,6 +21,7 @@ import MyProfile from "../components/myProfile/MyProfile";
 import MyTransactions from "../components/myTransaction/MyTransactions";
 import WithdrawHistory from "../agentComponents/withdrawHistory/WithdrawHistory";
 import AllWithdraws from "../adminComponents/allWithdraws/AllWithdraws";
+import UserDetails from "../adminComponents/userDetails/UserDetails";
 
 export const Router = createBrowserRouter([
     {
@@ -118,6 +119,12 @@ export const Router = createBrowserRouter([
                 path:'withdrawHistory',
                 element:<WithdrawHistory/>
             },
+
+            // demo route
+            {
+                path:"demo",
+                element:<UserDetails/>
+            }
         ]
     },
     {
