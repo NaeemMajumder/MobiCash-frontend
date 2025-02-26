@@ -101,6 +101,14 @@ const Sidebar = () => {
                   <BiMoneyWithdraw className="mr-3" size={24} /> WithDraw Requests
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/profile/cashRequest"
+                  className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                >
+                  <BiMoneyWithdraw className="mr-3" size={24} /> Cash Request
+                </NavLink>
+              </li>
             </>
 
             <li>
