@@ -30,7 +30,7 @@ const Sidebar = () => {
 
       {/* Full-Screen Sidebar */}
       <div
-        className={`fixed inset-0 w-[350px] h-full bg-[#F2F6FE] p-6 text-white shadow-2xl transition-transform ${
+        className={`fixed overflow-auto inset-0 w-[350px] h-full bg-[#F2F6FE] p-6 text-white shadow-2xl transition-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } z-50`}
       >
@@ -72,12 +72,13 @@ const Sidebar = () => {
             </>
 
             <>
+            {/* agent route */}
             <li>
                 <NavLink
                   to="/profile/withdrawHistory"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
-                  <FiCreditCard className="mr-3" size={24} /> Withdraw History
+                  <BiMoneyWithdraw className="mr-3" size={24} /> Withdraw History
                 </NavLink>
               </li>
             </>

@@ -19,6 +19,7 @@ import CashRequest from "../agentComponents/cashRequest/CashRequest";
 import CashApprove from "../adminComponents/cashRequestAdmin/CashApprove";
 import MyProfile from "../components/myProfile/MyProfile";
 import MyTransactions from "../components/myTransaction/MyTransactions";
+import WithdrawHistory from "../agentComponents/withdrawHistory/WithdrawHistory";
 
 export const Router = createBrowserRouter([
     {
@@ -110,7 +111,7 @@ export const Router = createBrowserRouter([
             // agent
             {
                 path:'withdrawHistory',
-                element:<MyTransactions/>
+                element:<WithdrawHistory/>
             },
         ]
     },
