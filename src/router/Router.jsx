@@ -16,6 +16,7 @@ import NewAgent from "../adminComponents/newAgentRequest/NewAgent";
 import WithdrawRequest from "../adminComponents/withdrawRequest/WithdrawRequest";
 import AllTransactions from "../adminComponents/allTransaction/AllTransactions";
 import CashRequest from "../agentComponents/cashRequest/CashRequest";
+import CashApprove from "../adminComponents/cashRequestAdmin/CashApprove";
 
 export const Router = createBrowserRouter([
     {
@@ -89,6 +90,10 @@ export const Router = createBrowserRouter([
             {
                 path:'withdrawRequests',
                 element:<WithdrawRequest/>
+            },
+            {
+                path:'cashRequest',
+                element:<CashApprove/>
             },
         ]
     },

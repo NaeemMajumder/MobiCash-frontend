@@ -59,14 +59,6 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                href="/dashboard"
-                className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
-              >
-                <FiHome className="mr-3" size={24} /> Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
                 to="/profile/transactions"
                 className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
               >
