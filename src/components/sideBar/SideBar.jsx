@@ -12,10 +12,23 @@ import { PiHandWithdrawBold } from "react-icons/pi";
 import { RiPassPendingLine } from "react-icons/ri";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { GiCash } from "react-icons/gi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import AuthProviderHook from "../../customHooks/AuthProviderHook";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const {userData ,setUser, signOutUser, handleError } = AuthProviderHook();
+  const navigate = useNavigate();
+
+  let handleLogOut = () => {
+    signOutUser()
+      .then(() => {
+        setUser(null);
+        navigate("/login");
+        alert("signout successful");
+      })
+      .catch(handleError);
+  };
 
   return (
     <div className="inter">
@@ -67,19 +80,21 @@ const Sidebar = () => {
                   to="/profile/userTransactions"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
-                  <FiCreditCard className="mr-3" size={24} /> My All Transactions
+                  <FiCreditCard className="mr-3" size={24} /> My All
+                  Transactions
                 </NavLink>
               </li>
             </>
 
             <>
-            {/* agent route */}
-            <li>
+              {/* agent route */}
+              <li>
                 <NavLink
                   to="/profile/withdrawHistory"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
-                  <BiMoneyWithdraw className="mr-3" size={24} /> Withdraw History
+                  <BiMoneyWithdraw className="mr-3" size={24} /> Withdraw
+                  History
                 </NavLink>
               </li>
             </>
@@ -127,7 +142,8 @@ const Sidebar = () => {
                   to="/profile/allWithdraws"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
-                  <PiHandWithdrawBold className="mr-3" size={24} /> All WithDraws
+                  <PiHandWithdrawBold className="mr-3" size={24} /> All
+                  WithDraws
                 </NavLink>
               </li>
               <li>
@@ -141,7 +157,7 @@ const Sidebar = () => {
             </>
 
             <li>
-              <button className="flex items-center p-4 text-red-600 hover:bg-red-100 rounded-md w-full">
+              <button onClick={handleLogOut} className="flex items-center p-4 text-red-600 hover:bg-red-100 rounded-md w-full">
                 <FiLogOut className="mr-3" size={24} /> Logout
               </button>
             </li>
