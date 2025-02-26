@@ -66,7 +66,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         // get data from database
         axiosSecure
-          .get("/users")
+          .get(`/users?email=${currentUser.email}`)
           .then((res) => {
             setUserData(res.data);
           })

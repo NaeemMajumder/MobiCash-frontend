@@ -20,13 +20,13 @@ const Services = () => {
       id: 3,
       title: "24/7 Support",
       description: "Our customer support is available around the clock.",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "",
     },
     {
       id: 4,
       title: "Instant Transfers",
       description: "Send and receive money instantly with no hassle.",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "demo",
     },
   ];
   return (

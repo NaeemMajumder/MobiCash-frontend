@@ -51,7 +51,7 @@ const UserDetails = () => {
             {/* Right Side (Avatar or Additional Info) */}
             <div className="w-full md:w-1/2 flex justify-center items-center">
               <img
-                src="https://via.placeholder.com/150"
+                src="demo"
                 alt="User Avatar"
                 className="rounded-full border-4 border-[#164193] p-2 w-32 h-32"
               />
