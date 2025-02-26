@@ -57,17 +57,31 @@ const Sidebar = () => {
                 <FiUser className="mr-3" size={24} /> My Profile
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/profile/transactions"
-                className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
-              >
-                <FiCreditCard className="mr-3" size={24} />All Transactions
-              </NavLink>
-            </li>
+
+            <>
+              {/* user route */}
+              <li>
+                <NavLink
+                  to="/profile/userTransactions"
+                  className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                >
+                  <FiCreditCard className="mr-3" size={24} /> My All Transactions
+                </NavLink>
+              </li>
+            </>
 
             <>
               {/* admin routes */}
+              <li>
+                <NavLink
+                  to="/profile/transactions"
+                  className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                >
+                  <FiCreditCard className="mr-3" size={24} />
+                  All Transactions
+                </NavLink>
+              </li>
+
               <li>
                 <NavLink
                   to="/profile/allUsers"
@@ -90,7 +104,8 @@ const Sidebar = () => {
                   to="/profile/withdrawRequests"
                   className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
                 >
-                  <BiMoneyWithdraw className="mr-3" size={24} /> WithDraw Requests
+                  <BiMoneyWithdraw className="mr-3" size={24} /> WithDraw
+                  Requests
                 </NavLink>
               </li>
               <li>
