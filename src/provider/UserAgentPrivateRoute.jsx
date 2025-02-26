@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 
-const AdminPrivateRoute = ({ children }) => {
+const UserAgentPrivateRoute = ({ children }) => {
   let { user, loading, userData, setUser, signOutUser, handleError } =
     useContext(AuthContext); // Assuming userData contains the role
   let location = useLocation();
@@ -34,4 +34,4 @@ const AdminPrivateRoute = ({ children }) => {
   );
 };
 
-export default AdminPrivateRoute;
+export default UserAgentPrivateRoute;

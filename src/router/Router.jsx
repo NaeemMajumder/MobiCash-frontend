@@ -26,6 +26,7 @@ import PrivateRoute from "../provider/PrivateRoute";
 import AgentPrivateRoute from "../provider/AgentPrivateRoute";
 import AdminPrivateRoute from "../provider/AdminPrivateRoute";
 import UserPrivateRoute from "../provider/UserPrivateRoute";
+import UserAgentPrivateRoute from "../provider/UserAgentPrivateRoute";
 
 export const Router = createBrowserRouter([
     {
@@ -47,36 +48,36 @@ export const Router = createBrowserRouter([
             },
             {
                 path:'/services',
-                element: <PrivateRoute><UserPrivateRoute><Services/></UserPrivateRoute></PrivateRoute>
+                element: <PrivateRoute><UserAgentPrivateRoute><Services/></UserAgentPrivateRoute></PrivateRoute>
             },
             {
                 path:'/sendMoney',
-                element: <SendMoney/>
+                element: <PrivateRoute><UserPrivateRoute><SendMoney/></UserPrivateRoute></PrivateRoute>
             },
             {
                 path:'/cashOut',
-                element: <CashOut/>
+                element: <PrivateRoute><UserPrivateRoute><CashOut/></UserPrivateRoute></PrivateRoute>
             },
 
             // agent route
             {
                 path:'/cashIn',
-                element: <CashIn/>
+                element: <PrivateRoute><AgentPrivateRoute><CashIn/></AgentPrivateRoute></PrivateRoute>
             },
             {
                 path:'/withdrawBalance',
-                element: <WithdrawBalance/>
+                element: <PrivateRoute><AgentPrivateRoute><WithdrawBalance/></AgentPrivateRoute></PrivateRoute>
             },
             {
                 path:'/cashRequest',
-                element: <CashRequest/>
+                element: <PrivateRoute><AgentPrivateRoute><CashRequest/></AgentPrivateRoute></PrivateRoute>
             },
 
 
-            {
-                path:'/otp',
-                element: <OTP/>
-            },
+            // {
+            //     path:'/otp',
+            //     element: <OTP/>
+            // },
         ]
     },
     {
