@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import AuthProviderHook from "../../customHooks/AuthProviderHook";
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Import React Icons
 
 const Nav = () => {
   const [showBalance, setShowBalance] = useState(false);
   const balance = 50000; // Example balance
-  const { user, userData} = AuthProviderHook();
-  console.log(userData);
+  const { user, userData, setUser, signOutUser, handleError } = AuthProviderHook();
+  const navigate = useNavigate();
+  
   const links = (
     <>
       <li>
@@ -21,6 +22,16 @@ const Nav = () => {
       </li>
     </>
   );
+
+  let handleLogOut = ()=>{
+    signOutUser()
+      .then(() => {
+        setUser(null);
+        navigate("/login");
+        alert("signout successful");
+      })
+      .catch(handleError);
+  }
 
   return (
     <>
@@ -92,12 +103,24 @@ const Nav = () => {
                   />
 
                   {/* Balance Display (Hidden or Visible) */}
-                  <span>{showBalance ? `${balance}৳` : "****"}</span>
+                  <span>
+                    {userData?.role === "Admin"
+                      ? `${balance}৳`
+                      : showBalance
+                      ? `${balance}৳`
+                      : "****"}
+                  </span>
 
                   {/* Toggle Eye Button */}
-                  <button onClick={() => setShowBalance(!showBalance)}>
-                    {showBalance ? <HiEyeOff size={17} /> : <HiEye size={17} />}
-                  </button>
+                  {userData?.role !== "Admin" && (
+                    <button onClick={() => setShowBalance(!showBalance)}>
+                      {showBalance ? (
+                        <HiEyeOff size={17} />
+                      ) : (
+                        <HiEye size={17} />
+                      )}
+                    </button>
+                  )}
                 </div>
 
                 {/* user profile */}
@@ -124,7 +147,7 @@ const Nav = () => {
                       </Link>
                     </li>
                     <li>
-                      <a>Logout</a>
+                      <button onClick={handleLogOut}>Logout</button>
                     </li>
                   </ul>
                 </div>
