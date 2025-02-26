@@ -80,6 +80,7 @@ export const Router = createBrowserRouter([
         element:<DashBoard/>,
         children:[
             {
+                path:"",
                 element:<MyProfile/>
             },
             // admin route
