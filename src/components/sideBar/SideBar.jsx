@@ -8,6 +8,7 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import { FaUsers } from "react-icons/fa";
+import { PiHandWithdrawBold } from "react-icons/pi";
 import { RiPassPendingLine } from "react-icons/ri";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { GiCash } from "react-icons/gi";
@@ -119,6 +120,14 @@ const Sidebar = () => {
                 >
                   <BiMoneyWithdraw className="mr-3" size={24} /> WithDraw
                   Requests
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/profile/allWithdraws"
+                  className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                >
+                  <PiHandWithdrawBold className="mr-3" size={24} /> All WithDraws
                 </NavLink>
               </li>
               <li>
