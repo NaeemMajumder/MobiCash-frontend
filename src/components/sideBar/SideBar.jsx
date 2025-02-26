@@ -67,7 +67,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                href="/profile/transactions"
+                to="/profile/transactions"
                 className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
               >
                 <FiCreditCard className="mr-3" size={24} />All Transactions

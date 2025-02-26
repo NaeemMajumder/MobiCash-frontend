@@ -14,6 +14,7 @@ import DashBoard from "../components/dashboard/DashBoard";
 import AllUsers from "../adminComponents/allUsers/AllUsers";
 import NewAgent from "../adminComponents/newAgentRequest/NewAgent";
 import WithdrawRequest from "../adminComponents/withdrawRequest/WithdrawRequest";
+import AllTransactions from "../adminComponents/allTransaction/AllTransactions";
 
 export const Router = createBrowserRouter([
     {
@@ -68,6 +69,10 @@ export const Router = createBrowserRouter([
         element:<DashBoard/>,
         children:[
             // admin route
+            {
+                path:'transactions',
+                element:<AllTransactions/>
+            },
             {
                 path:'allUsers',
                 element:<AllUsers/>
