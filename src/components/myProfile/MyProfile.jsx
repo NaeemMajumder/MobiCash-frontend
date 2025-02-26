@@ -2,8 +2,11 @@ import React from "react";
 import AdminDash from "../../adminComponents/adminDash/AdminDash";
 import AgentDash from "../../agentComponents/agentDash/AgentDash";
 import UserDash from "../userDash/UserDash";
+import AuthProviderHook from "../../customHooks/AuthProviderHook";
 
 const MyProfile = () => {
+  const {userData} = AuthProviderHook();
+  console.log(userData);
   // Example user data
   const user = {
     name: "John Doe",
@@ -16,9 +19,12 @@ const MyProfile = () => {
     <>
       <section className="w-full bg-[#F2F6FE]">
         <div className="width">
-          <AdminDash></AdminDash>
+          {
+            userData?.role === "Admin"? <AdminDash/>: userData?.role === "Agent"? <AgentDash/>:<UserDash/>
+          }
+          {/* <AdminDash></AdminDash>
           <AgentDash></AgentDash>
-          <UserDash></UserDash>
+          <UserDash></UserDash> */}
         </div>
 
         {/* my profile information */}
@@ -28,7 +34,7 @@ const MyProfile = () => {
               {/* Profile Image */}
               <div className="relative w-24 h-24 mx-auto mb-4">
                 <img
-                  src={user.image}
+                  src={userData?.image}
                   alt="Profile"
                   className="w-24 h-24 rounded-full border-4 border-blue-500 object-cover"
                 />
@@ -47,7 +53,7 @@ const MyProfile = () => {
                   </label>
                   <input
                     type="text"
-                    value={user.name}
+                    value={userData?.name}
                     disabled
                     className="w-full p-2 border rounded-md bg-gray-100 cursor-not-allowed"
                   />
@@ -58,7 +64,7 @@ const MyProfile = () => {
                   </label>
                   <input
                     type="text"
-                    value={user.phone}
+                    value={userData?.phone}
                     disabled
                     className="w-full p-2 border rounded-md bg-gray-100 cursor-not-allowed"
                   />
@@ -69,7 +75,7 @@ const MyProfile = () => {
                   </label>
                   <input
                     type="email"
-                    value={user.email}
+                    value={userData?.email}
                     disabled
                     className="w-full p-2 border rounded-md bg-gray-100 cursor-not-allowed"
                   />
@@ -80,7 +86,7 @@ const MyProfile = () => {
                   </label>
                   <input
                     type="text"
-                    value={user.role}
+                    value={userData?.role}
                     disabled
                     className="w-full p-2 border rounded-md bg-gray-100 cursor-not-allowed"
                   />
