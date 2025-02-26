@@ -45,7 +45,7 @@ const CashIn = () => {
     cashInData.email = "agent@gmail.com";
     cashInData.currentBalance = balance - cashInAmount;
     cashInData.amount = parseFloat(cashInData.amount);
-    console.log(cashInData);
+    // console.log(cashInData);
 
     setStep(0);
     setCashInData({ userNumber: "+880", amount: "", pin: "" });

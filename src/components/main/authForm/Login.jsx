@@ -29,9 +29,9 @@ const Login = () => {
       alert("Please enter a valid phone number.");
       return;
     }
-    console.log(`Auth Method: ${authMethod}`);
-    console.log(`Entered Value: ${inputValue}`);
-    console.log(`Entered PIN: ${pinValue}`);
+    // console.log(`Auth Method: ${authMethod}`);
+    // console.log(`Entered Value: ${inputValue}`);
+    // console.log(`Entered PIN: ${pinValue}`);
 
     signInUser(inputValue, pinValue)
       .then((result) => {

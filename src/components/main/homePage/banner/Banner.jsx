@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 
 const Banner = () => {
+
+
   return (
     <div
       className="relative w-full h-[60vh] sm:h-[50vh] md:h-[60vh] lg:h-[75vh] flex items-center text-white px-4"
@@ -25,7 +28,7 @@ const Banner = () => {
           Seamless Banking, Anytime, Anywhere
         </h1>
         <p className="mt-3 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed sm:leading-normal">
-          Experience secure and convenient mobile banking at your fingertips. 
+          Experience secure and convenient mobile banking at your fingertips.
           Manage your finances, transfer funds, and pay bills effortlessly—
           whenever you need, wherever you are.
         </p>

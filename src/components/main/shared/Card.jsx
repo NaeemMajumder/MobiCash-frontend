@@ -1,7 +1,6 @@
 import React from "react";
 
 const Card = ({ item }) => {
-  console.log(item);
   return (
     <>
       <div className="max-w-xs w-full text-center bg-white rounded-lg shadow-md overflow-hidden">

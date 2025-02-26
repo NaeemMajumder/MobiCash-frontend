@@ -33,7 +33,7 @@ const WithdrawBalance = () => {
     withdrawData.email = "agent@gmail.com";
     withdrawData.balance = balance;
     withdrawData.amount = parseFloat(withdrawData.amount);
-    console.log(withdrawData);
+    // console.log(withdrawData);
 
     setWithdrawData({ phone: "+880", amount: "", pin: "" });  
     alert(`✅ Withdrawal of ${withdrawData.amount} Taka has been successfully requested.`);
