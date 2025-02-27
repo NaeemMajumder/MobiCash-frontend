@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthProviderHook from "../../../customHooks/AuthProviderHook";
 import UseAxiosSecure from "../../../customHooks/UseAxiosSecure";
 import verifyPin from "../../../../utils/verifyPin";
+import { moneyTransaction } from "../../../../utils/moneyTransactions";
 
 const SendMoney = () => {
   const { userData, handleError } = AuthProviderHook();
@@ -45,7 +46,7 @@ const SendMoney = () => {
   };
 
   // Handle Send Money
-  const handleSendMoney = () => {
+  const handleSendMoney = async() => {
     let sendAmount = parseFloat(amount);
     let totalDeducted = sendAmount > 100 ? sendAmount + 5 : sendAmount;
 
@@ -64,10 +65,8 @@ const SendMoney = () => {
       amountTransaction: totalDeducted,
       amountBeforeTransaction: balance
     }
-    axiosSecure.post('/sendMoney', transactionInfo)
-    .then(res=>{
-      console.log(res.data);
-    })
+    const res = await moneyTransaction(axiosSecure, "/sendMoney", transactionInfo).catch(handleError);
+    console.log(res);
 
     setBalance(balance - totalDeducted);
     setMessage(
