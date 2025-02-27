@@ -1,15 +1,21 @@
 import React, { useState } from "react";
+import UseAxiosSecure from "../../../customHooks/UseAxiosSecure";
+import AuthProviderHook from "../../../customHooks/AuthProviderHook";
+import verifyPin from "../../../../utils/verifyPin";
+import { moneyTransaction } from "../../../../utils/moneyTransactions";
 
 const CashOut = () => {
-  const [balance, setBalance] = useState(1000); // Example user balance
-  const [step, setStep] = useState(0); // Modal steps (0 = closed, 1 = agent number, 2 = amount, 3 = PIN, 4 = confirmation)
+  const { userData, handleError } = AuthProviderHook();
+  const axiosSecure = UseAxiosSecure();
+  const [balance, setBalance] = useState(userData?.currentBalance);
+  const [step, setStep] = useState(0);
   const [agentNumber, setAgentNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [pin, setPin] = useState("");
   const [message, setMessage] = useState("");
 
   // Handle Next Step
-  const handleNext = () => {
+  const handleNext = async () => {
     if (step === 1 && (agentNumber.length < 10 || isNaN(agentNumber))) {
       alert("❌ Please enter a valid 11-digit agent number.");
       return;
@@ -29,25 +35,40 @@ const CashOut = () => {
       }
     }
 
+    if (step === 3) {
+      const res = await verifyPin(axiosSecure, userData?.email, pin).catch(
+        handleError
+      );
+      if (!res) {
+        alert("❌ Wrong PIN number.");
+        return; // Stop further execution if PIN is incorrect
+      }
+    }
+
     setStep(step + 1);
   };
 
   // Handle Cash Out
-  const handleCashOut = () => {
+  const handleCashOut = async () => {
     let cashOutAmount = parseFloat(amount);
-    let youGetAmount = cashOutAmount - (cashOutAmount*(1.50/100)); // 1.5% deduction
+    let youGetAmount = cashOutAmount - cashOutAmount * (1.5 / 100);
 
     let cashOut = {
-      email:'demo@gmail.com',
-      agentNumber,
-      cashOutAmount,
-      agentTake: cashOutAmount*(1/100),
-      adminTake: cashOutAmount*(0.50/100),
-      currentBalance: balance-cashOutAmount,
-    }
-
-    console.log(cashOut);
-
+      email: userData?.email,
+      name: userData?.name,
+      image: userData?.image,
+      phoneNumber: agentNumber,
+      role: userData?.role,
+      userPhoneNumber: userData?.phone,
+      amountTransaction: cashOutAmount,
+      amountBeforeTransaction: balance,
+    };
+    const res = await moneyTransaction(
+      axiosSecure,
+      "/cashOut",
+      cashOut
+    ).catch(handleError);
+    console.log(res);
 
     setBalance(balance - cashOutAmount);
     setMessage(
@@ -147,15 +168,18 @@ const CashOut = () => {
                 </p>
                 {amount && (
                   <>
-                  <p className="text-sm text-red-500 mt-1">
-                    Transaction Fee: 1.5% <br />
-                    <b className="text-green-500">
-                      You Will Get: {(parseFloat(amount) - (parseFloat(amount)*(1.5/100))).toFixed(2)}{" "}
-                      Taka
-                    </b>
-                  </p>                
+                    <p className="text-sm text-red-500 mt-1">
+                      Transaction Fee: 1.5% <br />
+                      <b className="text-green-500">
+                        You Will Get:{" "}
+                        {(
+                          parseFloat(amount) -
+                          parseFloat(amount) * (1.5 / 100)
+                        ).toFixed(2)}{" "}
+                        Taka
+                      </b>
+                    </p>
                   </>
-
                 )}
                 <div className="flex justify-between mt-4">
                   <button
@@ -210,19 +234,20 @@ const CashOut = () => {
                   Withdraw <b>{amount} Taka</b> via agent <b>{agentNumber}</b>
                 </p>
                 <p className="text-red-500">
-                  Total Deduction:{" "}
-                  <b>{(parseFloat(amount)).toFixed(2)} Taka</b>
+                  Total Deduction: <b>{parseFloat(amount).toFixed(2)} Taka</b>
                 </p>
                 <p className="text-green-600">
                   Remaining Balance:{" "}
-                  <b>
-                    {(balance - parseFloat(amount)).toFixed(2)} Taka
-                  </b>
+                  <b>{(balance - parseFloat(amount)).toFixed(2)} Taka</b>
                 </p>
                 <p className="text-green-600">
                   You Will Get:{" "}
                   <b>
-                    {(parseFloat(amount) - (parseFloat(amount)*(1.5/100))).toFixed(2)} Taka
+                    {(
+                      parseFloat(amount) -
+                      parseFloat(amount) * (1.5 / 100)
+                    ).toFixed(2)}{" "}
+                    Taka
                   </b>
                 </p>
                 <div className="flex justify-between mt-4">

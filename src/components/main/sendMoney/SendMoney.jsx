@@ -66,7 +66,6 @@ const SendMoney = () => {
       amountBeforeTransaction: balance
     }
     const res = await moneyTransaction(axiosSecure, "/sendMoney", transactionInfo).catch(handleError);
-    console.log(res);
 
     setBalance(balance - totalDeducted);
     setMessage(
