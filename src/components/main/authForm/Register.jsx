@@ -5,9 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AuthProviderHook from "../../../customHooks/AuthProviderHook";
 import axios from "axios";
-import UseAxiosSecure, { axiosSecure } from "../../../customHooks/UseAxiosSecure";
+import UseAxiosSecure, {
+  axiosSecure,
+} from "../../../customHooks/UseAxiosSecure";
 import { toast } from "react-toastify";
-
 
 const Register = () => {
   const [number, setNumber] = useState("");
@@ -16,12 +17,10 @@ const Register = () => {
   const [pinVisible, setPinVisible] = useState(false);
   const { setUser, registerWithEmail, updateUserProfile, handleError } =
     AuthProviderHook();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  const axiosSecure = UseAxiosSecure();
   const validateForm = (formData) => {
-    const axiosSecure = UseAxiosSecure();
-
-
     const errors = {};
     // Check if required fields are filled
     if (!formData.name) errors.name = "Name is required.";
@@ -46,7 +45,7 @@ const Register = () => {
 
     axios
       .get(`/public/json/nidData.json`)
-      .then(async(res) => {
+      .then(async (res) => {
         const nidData = res.data;
         const nidMatched = nidData.find(
           (item) => item.nid_number === newUserInfo.nid
@@ -63,8 +62,6 @@ const Register = () => {
           setFormErrors(errors);
           return;
         }
-
-
 
         // image upload and save the url=================
         const file = newUserInfo.image;
@@ -84,25 +81,25 @@ const Register = () => {
         newUserInfo.image = data.data.display_url;
         // ===============================================
 
-
         // Handle successful registration
         registerWithEmail(newUserInfo.email, newUserInfo.pin)
           .then((result) => {
             setUser(result.user);
-            updateUserProfile({ displayName: newUserInfo.name, photoURL: newUserInfo.image })
-              .then(async() => {
-
+            updateUserProfile({
+              displayName: newUserInfo.name,
+              photoURL: newUserInfo.image,
+            })
+              .then(async () => {
                 // data will go into backend
-                axiosSecure.post('/users', newUserInfo)
-                .then(res=>{
+                axiosSecure.post("/users", newUserInfo).then((res) => {
                   console.log(res.data);
-                })
+                });
 
-                navigate('/')
+                navigate("/");
                 toast.success("🎉 Welcome to Our Mobile Financial Service! 🎉");
               })
-              .catch(error=>{
-                console.log(error)
+              .catch((error) => {
+                console.log(error);
               });
           })
           .catch(handleError);
