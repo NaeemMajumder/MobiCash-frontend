@@ -68,7 +68,6 @@ const CashOut = () => {
       "/cashOut",
       cashOut
     ).catch(handleError);
-    console.log(res);
 
     setBalance(balance - cashOutAmount);
     setMessage(

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ServicesCard = ({ item }) => {
-  console.log(item);
   return (
     <>
       <Link to={item.link} className="max-w-xs w-full text-center bg-white rounded-lg shadow-md overflow-hidden">

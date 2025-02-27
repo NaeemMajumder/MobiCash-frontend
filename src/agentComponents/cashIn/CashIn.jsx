@@ -1,7 +1,14 @@
 import React, { useState } from "react";
+import AuthProviderHook from "../../customHooks/AuthProviderHook";
+import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
+import verifyPin from "../../../utils/verifyPin";
+import { moneyTransaction } from "../../../utils/moneyTransactions";
 
 const CashIn = () => {
-  const [balance, setBalance] = useState(1000); // Example user balance
+  const {userData, handleError} = AuthProviderHook();
+  const axiosSecure = UseAxiosSecure();
+
+  const [balance, setBalance] = useState(userData?.currentBalance); 
   const [step, setStep] = useState(0);
   const [cashInData, setCashInData] = useState({
     userNumber: "+880",
@@ -10,7 +17,7 @@ const CashIn = () => {
   });
   const [message, setMessage] = useState("");
 
-  const handleNext = () => {
+  const handleNext = async() => {
     if (step === 1) {
       if (
         cashInData.userNumber.length !== 14 ||
@@ -27,10 +34,21 @@ const CashIn = () => {
         return;
       }
     }
+
+    if (step === 3) {
+      const res = await verifyPin(axiosSecure, userData?.email, cashInData.pin).catch(
+        handleError
+      );
+      if (!res) {
+        alert("❌ Wrong PIN number.");
+        return;
+      }
+    }
+
     setStep(step + 1);
   };
 
-  const handleCashIn = () => {
+  const handleCashIn = async() => {
     let cashInAmount = parseFloat(cashInData.amount);
     setBalance(balance - cashInAmount);
     alert(
@@ -45,7 +63,20 @@ const CashIn = () => {
     cashInData.email = "agent@gmail.com";
     cashInData.currentBalance = balance - cashInAmount;
     cashInData.amount = parseFloat(cashInData.amount);
-    // console.log(cashInData);
+    console.log(cashInData);
+
+    let cashIn = {
+      email: userData?.email,
+      name: userData?.name,
+      image: userData?.image,
+      phoneNumber: cashInData?.userNumber,
+      role: userData?.role,
+      userPhoneNumber: userData?.phone,
+      amountTransaction: cashInData?.amount,
+      amountBeforeTransaction: balance,
+    };
+    const res = await moneyTransaction(axiosSecure, "/cashIn", cashIn).catch(handleError);
+    console.log(res);
 
     setStep(0);
     setCashInData({ userNumber: "+880", amount: "", pin: "" });
