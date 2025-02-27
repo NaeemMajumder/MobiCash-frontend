@@ -75,19 +75,21 @@ const Sidebar = () => {
             </li>
 
             <>
+              {userData?.role !== "Admin" && (
+                <li>
+                  <NavLink
+                    to="/profile/userTransactions"
+                    className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                  >
+                    <FiCreditCard className="mr-3" size={24} /> My All
+                    Transactions
+                  </NavLink>
+                </li>
+              )}
               {/* user route and agent */}
-              <li>
-                <NavLink
-                  to="/profile/userTransactions"
-                  className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
-                >
-                  <FiCreditCard className="mr-3" size={24} /> My All
-                  Transactions
-                </NavLink>
-              </li>
             </>
 
-            {userData?.role === "Agent" ? (
+            {userData?.role === "Agent" && (
               <>
                 {/* agent route */}
                 <li>
@@ -100,62 +102,66 @@ const Sidebar = () => {
                   </NavLink>
                 </li>
               </>
-            ) : (
-              <>
-                {/* admin routes */}
-                <li>
-                  <NavLink
-                    to="/profile/transactions"
-                    className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
-                  >
-                    <FiCreditCard className="mr-3" size={24} />
-                    All Transactions
-                  </NavLink>
-                </li>
+            )}
 
-                <li>
-                  <NavLink
-                    to="/profile/allUsers"
-                    className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
-                  >
-                    <FaUsers className="mr-3" size={24} /> All Users
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/profile/newAgents"
-                    className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
-                  >
-                    <RiPassPendingLine className="mr-3" size={24} /> New Agent
-                    (Pending)
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/profile/withdrawRequests"
-                    className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
-                  >
-                    <BiMoneyWithdraw className="mr-3" size={24} /> WithDraw
-                    Requests
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/profile/allWithdraws"
-                    className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
-                  >
-                    <PiHandWithdrawBold className="mr-3" size={24} /> All
-                    WithDraws
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/profile/cashRequest"
-                    className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
-                  >
-                    <GiCash className="mr-3" size={24} /> Cash Request
-                  </NavLink>
-                </li>
+            {userData?.role == "Admin" && (
+              <>
+                <>
+                  {/* admin routes */}
+                  <li>
+                    <NavLink
+                      to="/profile/transactions"
+                      className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                    >
+                      <FiCreditCard className="mr-3" size={24} />
+                      All Transactions
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink
+                      to="/profile/allUsers"
+                      className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                    >
+                      <FaUsers className="mr-3" size={24} /> All Users
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/profile/newAgents"
+                      className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                    >
+                      <RiPassPendingLine className="mr-3" size={24} /> New Agent
+                      (Pending)
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/profile/withdrawRequests"
+                      className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                    >
+                      <BiMoneyWithdraw className="mr-3" size={24} /> WithDraw
+                      Requests
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/profile/allWithdraws"
+                      className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                    >
+                      <PiHandWithdrawBold className="mr-3" size={24} /> All
+                      WithDraws
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/profile/cashRequest"
+                      className="flex items-center p-4 text-gray-700 hover:bg-gray-200 rounded-md"
+                    >
+                      <GiCash className="mr-3" size={24} /> Cash Request
+                    </NavLink>
+                  </li>
+                </>
               </>
             )}
 

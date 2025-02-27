@@ -1,6 +1,7 @@
 import React from "react";
 import ServicesCard from "../homePage/services/ServicesCard";
 import AuthProviderHook from "../../../customHooks/AuthProviderHook";
+import { Helmet } from "react-helmet";
 
 const Services = () => {
   const { userData } = AuthProviderHook();
@@ -46,6 +47,9 @@ const Services = () => {
 
   return (
     <>
+    <Helmet>
+      <title>Services - MobiCash</title>
+    </Helmet>
       <div className="w-full bg-[#F2F6FE]">
         <section className="width">
           <h1 className="text-4xl text-center py-20 font-bold text-[#0A294A] plusJakarta">

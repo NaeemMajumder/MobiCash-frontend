@@ -7,6 +7,7 @@ import Loading from "../../loading/Loading";
 import { Link } from "react-router-dom";
 import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const AllUsers = () => {
   const [searchType, setSearchType] = useState("name");
@@ -67,6 +68,9 @@ const AllUsers = () => {
 
   return (
     <>
+    <Helmet>
+      <title>All Users</title>
+    </Helmet>
       <section className="w-full bg-[#F2F6FE] inter">
         <div className="p-6 min-h-screen width">
           <h1 className="text-3xl font-bold text-[#164193] mb-4">

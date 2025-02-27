@@ -13,7 +13,7 @@ const UserAgentPrivateRoute = ({ children }) => {
       signOutUser()
         .then(() => {
           setUser(null);
-          toast.error("login in an ADMIN account");
+          toast.error("login in an admin or user account");
         })
         .catch(handleError);
     }

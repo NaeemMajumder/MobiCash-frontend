@@ -1,35 +1,47 @@
 import React, { useContext, useEffect } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 import { toast } from "react-toastify";
+import Loading from "../loading/Loading";
 
 const UserPrivateRoute = ({ children }) => {
   let { user, loading, userData, setUser, signOutUser, handleError } =
-    useContext(AuthContext); // Assuming userData contains the role
+    useContext(AuthContext); // Assuming userData contains the role and account status
   let location = useLocation();
+  let navigate = useNavigate();
 
   useEffect(() => {
-    if (user && user.email && userData?.role !== "User") {
-      signOutUser()
-        .then(() => {
-          setUser(null);
-          toast.error("login in an ADMIN account");
-        })
-        .catch(handleError);
+    if (user && user.email) {
+      if (userData?.role !== "User") {
+        signOutUser()
+          .then(() => {
+            setUser(null);
+            toast.error("Login with an ADMIN account");
+          })
+          .catch(handleError);
+      } else if (userData?.accountStatus === "banned") {
+        signOutUser()
+          .then(() => {
+            setUser(null);
+            navigate('/login')
+            toast.error("Your account is banned. Please contact support.");
+          })
+          .catch(handleError);
+      }
     }
-  }, [user, userData]);
+  }, [user, userData?.accountStatus]);
 
   if (loading) {
-    return <span className="loading loading-spinner text-info"></span>;
+    return <Loading/>;
   }
 
-  if (user && user.email && userData?.role === "User") {
+  if (user && user.email && userData?.role === "User" && userData?.accountStatus !== "banned") {
     return children;
   }
 
   return (
     <>
-      {console.log("not an admin or not logged in")}
+      {console.log("Not an admin, banned, or not logged in")}
       <Navigate state={location.pathname} to="/login" />
     </>
   );
