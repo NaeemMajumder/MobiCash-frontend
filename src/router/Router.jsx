@@ -123,7 +123,7 @@ export const Router = createBrowserRouter([
             {
               path: "details/:id",
               element: <UserDetails />,
-              loader: ({params})=>fetch(`http://localhost:3000/user/${params.id}`)
+              loader: ({params})=>fetch(`https://mobi-cash-backend.vercel.app/user/${params.id}`)
             },
         ]
     },

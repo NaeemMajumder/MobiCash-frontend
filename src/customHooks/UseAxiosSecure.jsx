@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://mobi-cash-backend.vercel.app",
 });
 const UseAxiosSecure = () => {
 
