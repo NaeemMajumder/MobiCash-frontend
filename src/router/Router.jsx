@@ -28,113 +28,217 @@ import AdminPrivateRoute from "../provider/AdminPrivateRoute";
 import UserPrivateRoute from "../provider/UserPrivateRoute";
 import UserAgentPrivateRoute from "../provider/UserAgentPrivateRoute";
 
+// export const Router = createBrowserRouter([
+//     {
+//         path:'/',
+//         element: <App/>,
+//         errorElement: <Error/>,
+//         children:[
+//             {
+//                 path:'/',
+//                 element: <Main/>
+//             },
+//             {
+//                 path:'/register',
+//                 element: <Register/>
+//             },
+//             {
+//                 path:'/login',
+//                 element: <Login/>
+//             },
+//             {
+//                 path:'/services',
+//                 element: <PrivateRoute><UserAgentPrivateRoute><Services/></UserAgentPrivateRoute></PrivateRoute>
+//             },
+//             {
+//                 path:'/sendMoney',
+//                 element: <PrivateRoute><UserPrivateRoute><SendMoney/></UserPrivateRoute></PrivateRoute>
+//             },
+//             {
+//                 path:'/cashOut',
+//                 element: <PrivateRoute><UserPrivateRoute><CashOut/></UserPrivateRoute></PrivateRoute>
+//             },
+
+//             // agent route
+//             {
+//                 path:'/cashIn',
+//                 element: <PrivateRoute><AgentPrivateRoute><CashIn/></AgentPrivateRoute></PrivateRoute>
+//             },
+//             {
+//                 path:'/withdrawBalance',
+//                 element: <PrivateRoute><AgentPrivateRoute><WithdrawBalance/></AgentPrivateRoute></PrivateRoute>
+//             },
+//             {
+//                 path:'/cashRequest',
+//                 element: <PrivateRoute><AgentPrivateRoute><CashRequest/></AgentPrivateRoute></PrivateRoute>
+//             },
+
+//             // {
+//             //     path:'/otp',
+//             //     element: <OTP/>
+//             // },
+//         ]
+//     },
+//     {
+//         path:"/profile",
+//         element:<DashBoard/>,
+//         children:[
+//             {
+//                 path:"",
+//                 element:<MyProfile/>
+//             },
+//             // admin route
+//             {
+//                 path:'transactions',
+//                 element:<PrivateRoute><AdminPrivateRoute><AllTransactions/></AdminPrivateRoute></PrivateRoute>
+//             },
+//             {
+//                 path:'allUsers',
+//                 element:<PrivateRoute><AdminPrivateRoute><AllUsers/></AdminPrivateRoute></PrivateRoute>
+//             },
+//             {
+//                 path:'newAgents',
+//                 element:<PrivateRoute><AdminPrivateRoute><NewAgent/></AdminPrivateRoute></PrivateRoute>
+//             },
+//             {
+//                 path:'withdrawRequests',
+//                 element:<PrivateRoute><AdminPrivateRoute><WithdrawRequest/></AdminPrivateRoute></PrivateRoute>
+//             },
+//             {
+//                 path:'allWithdraws',
+//                 element:<PrivateRoute><AdminPrivateRoute><AllWithdraws/></AdminPrivateRoute></PrivateRoute>
+//             },
+//             {
+//                 path:'cashRequest',
+//                 element:<PrivateRoute><AdminPrivateRoute><CashApprove/></AdminPrivateRoute></PrivateRoute>
+//             },
+
+//             // user route
+//             {
+//                 path:'userTransactions',
+//                 element: <PrivateRoute><UserAgentPrivateRoute><MyTransactions/></UserAgentPrivateRoute></PrivateRoute> // user + agent
+//             },
+
+//             // agent
+//             {
+//                 path:'withdrawHistory',
+//                 element:<PrivateRoute><AgentPrivateRoute><WithdrawHistory/></AgentPrivateRoute></PrivateRoute>
+//             },
+
+//             // demo route
+//             {
+//                 path:"demo",
+//                 element:<UserDetails/>
+//             }
+//         ]
+//     },
+//     {
+//         path:"*",
+//         element: <Error/>
+//     }
+// ])
+
 export const Router = createBrowserRouter([
-    {
-        path:'/',
-        element: <App/>,
-        errorElement: <Error/>,
-        children:[
-            {
-                path:'/',
-                element: <Main/>
-            },
-            {
-                path:'/register',
-                element: <Register/>
-            },
-            {
-                path:'/login',
-                element: <Login/>
-            },
-            {
-                path:'/services',
-                element: <PrivateRoute><UserAgentPrivateRoute><Services/></UserAgentPrivateRoute></PrivateRoute>
-            },
-            {
-                path:'/sendMoney',
-                element: <PrivateRoute><UserPrivateRoute><SendMoney/></UserPrivateRoute></PrivateRoute>
-            },
-            {
-                path:'/cashOut',
-                element: <PrivateRoute><UserPrivateRoute><CashOut/></UserPrivateRoute></PrivateRoute>
-            },
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "/",
+        element: <Main />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/services",
+        element: <Services />,
+      },
+      {
+        path: "/sendMoney",
+        element: <SendMoney />,
+      },
+      {
+        path: "/cashOut",
+        element: <CashOut />,
+      },
 
-            // agent route
-            {
-                path:'/cashIn',
-                element: <PrivateRoute><AgentPrivateRoute><CashIn/></AgentPrivateRoute></PrivateRoute>
-            },
-            {
-                path:'/withdrawBalance',
-                element: <PrivateRoute><AgentPrivateRoute><WithdrawBalance/></AgentPrivateRoute></PrivateRoute>
-            },
-            {
-                path:'/cashRequest',
-                element: <PrivateRoute><AgentPrivateRoute><CashRequest/></AgentPrivateRoute></PrivateRoute>
-            },
+      // agent route
+      {
+        path: "/cashIn",
+        element: <CashIn />,
+      },
+      {
+        path: "/withdrawBalance",
+        element: <WithdrawBalance />,
+      },
+      {
+        path: "/cashRequest",
+        element: <CashRequest />,
+      },
+    ],
+  },
+  {
+    path: "/profile",
+    element: <DashBoard />,
+    children: [
+      {
+        path: "",
+        element: <MyProfile />,
+      },
+      // admin route
+      {
+        path: "transactions",
+        element: <AllTransactions />,
+      },
+      {
+        path: "allUsers",
+        element: <AllUsers />,
+      },
+      {
+        path: "newAgents",
+        element: <NewAgent />,
+      },
+      {
+        path: "withdrawRequests",
+        element: <WithdrawRequest />,
+      },
+      {
+        path: "allWithdraws",
+        element: <AllWithdraws />,
+      },
+      {
+        path: "cashRequest",
+        element: <CashApprove />,
+      },
 
+      // user route
+      {
+        path: "userTransactions",
+        element: <MyTransactions />,
+      },
 
-            // {
-            //     path:'/otp',
-            //     element: <OTP/>
-            // },
-        ]
-    },
-    {
-        path:"/profile",
-        element:<DashBoard/>,
-        children:[
-            {
-                path:"",
-                element:<MyProfile/>
-            },
-            // admin route
-            {
-                path:'transactions',
-                element:<AllTransactions/>
-            },
-            {
-                path:'allUsers',
-                element:<AllUsers/>
-            },
-            {
-                path:'newAgents',
-                element:<NewAgent/>
-            },
-            {
-                path:'withdrawRequests',
-                element:<WithdrawRequest/>
-            },
-            {
-                path:'allWithdraws',
-                element:<AllWithdraws/>
-            },
-            {
-                path:'cashRequest',
-                element:<CashApprove/>
-            },
-            
-            // user route
-            {
-                path:'userTransactions',
-                element:<MyTransactions/> // user + agent
-            },
+      // agent
+      {
+        path: "withdrawHistory",
+        element: <WithdrawHistory />,
+      },
 
-            // agent
-            {
-                path:'withdrawHistory',
-                element:<WithdrawHistory/>
-            },
-
-            // demo route
-            {
-                path:"demo",
-                element:<UserDetails/>
-            }
-        ]
-    },
-    {
-        path:"*",
-        element: <Error/>
-    }
-])
+      // demo route
+      {
+        path: "demo",
+        element: <UserDetails />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <Error />,
+  },
+]);

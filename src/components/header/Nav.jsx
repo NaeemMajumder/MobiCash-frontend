@@ -5,8 +5,8 @@ import { HiEye, HiEyeOff } from "react-icons/hi"; // Import React Icons
 
 const Nav = () => {
   const [showBalance, setShowBalance] = useState(false);
-  const balance = 50000; // Example balance
   const { user, userData, setUser, signOutUser, handleError } = AuthProviderHook();
+  const balance = userData?.currentBalance;
   const navigate = useNavigate();
   
   const links = (
