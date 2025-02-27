@@ -3,6 +3,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import { Link, useNavigate } from "react-router-dom"; // Assuming you are using React Router for navigation
 import AuthProviderHook from "../../../customHooks/AuthProviderHook";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [authMethod, setAuthMethod] = useState("email"); // Tracks selected auth method (email or phone)
@@ -26,17 +27,14 @@ const Login = () => {
     event.preventDefault();
 
     if (!isValidPhoneNumber(inputValue) && authMethod === "phone") {
-      alert("Please enter a valid phone number.");
+      toast.error("Please enter a valid phone number.");
       return;
     }
-    // console.log(`Auth Method: ${authMethod}`);
-    // console.log(`Entered Value: ${inputValue}`);
-    // console.log(`Entered PIN: ${pinValue}`);
 
     signInUser(inputValue, pinValue)
       .then((result) => {
         setUser(result.user);
-        alert("login successfully");
+        toast.success("login successfully");
         navigate("/");
       })
       .catch(handleError);
@@ -71,7 +69,6 @@ const Login = () => {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 py-2 px-2"
               >
                 <option value="email">Email</option>
-                <option value="phone">Phone</option>
               </select>
             </div>
 

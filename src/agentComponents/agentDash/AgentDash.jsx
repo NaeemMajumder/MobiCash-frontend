@@ -1,16 +1,15 @@
 import { FiDollarSign, FiTrendingUp, FiDownload, FiPieChart } from "react-icons/fi";
+import AuthProviderHook from "../../customHooks/AuthProviderHook";
 
 const AgentDash = () => {
-  const agentTotalAmount = 1500000; // Total amount in the system
-  const agentTotalRevenue = 800000; // Total revenue earned
-  const totalWithdrawn = 500000; // Total withdrawn amount
-  const currentRevenue = agentTotalRevenue - totalWithdrawn; // Revenue after withdrawal
+
+  const {userData} = AuthProviderHook();
 
   const stats = [
-    { title: "Total Amount in System", value: agentTotalAmount, icon: <FiDollarSign size={30} /> },
-    { title: "Total Revenue", value: agentTotalRevenue, icon: <FiTrendingUp size={30} /> },
-    { title: "Total Withdrawn", value: totalWithdrawn, icon: <FiDownload size={30} /> },
-    { title: "Current Revenue", value: currentRevenue, icon: <FiPieChart size={30} /> },
+    { title: "Current Balance", value: userData?.currentAgentSystemAmount, icon: <FiDollarSign size={30} /> },
+    { title: "Total Revenue", value: userData?.totalRevenue, icon: <FiTrendingUp size={30} /> },
+    { title: "Total Withdrawn", value: userData?.totalAgentWithdraw, icon: <FiDownload size={30} /> },
+    { title: "Current Revenue", value: userData?.currentAgentRevenueAmount, icon: <FiPieChart size={30} /> },
   ];
 
   return (

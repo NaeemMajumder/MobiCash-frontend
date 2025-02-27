@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
+import { toast } from "react-toastify";
 
 const AgentPrivateRoute = ({ children }) => {
   let { user, loading, userData, setUser, signOutUser, handleError } =
@@ -12,7 +13,7 @@ const AgentPrivateRoute = ({ children }) => {
       signOutUser()
         .then(() => {
           setUser(null);
-          alert("login in an AGENT account");
+          toast.error("login in an AGENT account");
         })
         .catch(handleError);
     }

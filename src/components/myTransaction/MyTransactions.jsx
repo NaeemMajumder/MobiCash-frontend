@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { UseMyTransactions } from "../../customHooks/tenStackQuery/UseTenSatack";
+import Loading from "../../loading/Loading";
+import moment from "moment";
 
 const userTransactionsData = [
   {
@@ -26,23 +29,30 @@ const MyTransactions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
+  const [myTransactions] = UseMyTransactions();
+  console.log(myTransactions);
+
+  if (!myTransactions) {
+    return <Loading/>; 
+  }
+
   // Filtering Logic
-  const filteredTransactions = userTransactionsData
+  const filteredTransactions = myTransactions
     .filter((transaction) => {
       if (searchQuery) {
-        return transaction.phone.includes(searchQuery);
+        return transaction.phoneNumber.includes(searchQuery);
       }
       return true;
     })
     .filter(
       (transaction) =>
-        transaction.transactionAmount >= amountRange[0] &&
-        transaction.transactionAmount <= amountRange[1]
+        transaction.amountTransaction >= amountRange[0] &&
+        transaction.amountTransaction <= amountRange[1]
     )
     .filter(
       (transaction) =>
-        new Date(transaction.transactionTime) >= new Date(dateRange[0]) &&
-        new Date(transaction.transactionTime) <= new Date(dateRange[1])
+        new Date(transaction.createdAt) >= new Date(dateRange[0]) &&
+        new Date(transaction.createdAt) <= new Date(dateRange[1])
     );
 
   // Pagination Logic
@@ -127,11 +137,11 @@ const MyTransactions = () => {
               {currentTransactions.map((transaction, index) => (
                 <tr key={transaction.id} className="border-b text-center">
                   <td className="p-3">{indexOfFirstTransaction + index + 1}</td>
-                  <td className="p-3">{transaction.phone}</td>
+                  <td className="p-3">{transaction.phoneNumber}</td>
                   <td className="p-3">{transaction.transactionId}</td>
-                  <td className="p-3">{transaction.transactionTime}</td>
+                  <td className="p-3">{moment(transaction.createdAt).format('DD/MM/YYYY, hh:mm A')}</td>
                   <td className="p-3 text-green-700 font-semibold">
-                    {transaction.transactionAmount} &#2547;
+                    {transaction.amountTransaction} &#2547;
                   </td>
                 </tr>
               ))}

@@ -6,6 +6,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AuthProviderHook from "../../../customHooks/AuthProviderHook";
 import axios from "axios";
 import UseAxiosSecure, { axiosSecure } from "../../../customHooks/UseAxiosSecure";
+import { toast } from "react-toastify";
 
 
 const Register = () => {
@@ -52,7 +53,7 @@ const Register = () => {
         );
 
         if (!nidMatched) {
-          alert("NID does not match any record.");
+          toast.error("NID does not match any record.");
           return;
         }
 
@@ -82,14 +83,6 @@ const Register = () => {
         const data = await response.json();
         newUserInfo.image = data.data.display_url;
         // ===============================================
-        // console.log(newUserInfo);
-
-
-        // axiosSecure.post('/users', newUserInfo)
-        // .then(res=>{
-        //   console.log(res.data);
-        //   alert("data sended");
-        // })
 
 
         // Handle successful registration
@@ -106,7 +99,7 @@ const Register = () => {
                 })
 
                 navigate('/')
-                alert("🎉 Welcome to Our Mobile Financial Service! 🎉");
+                toast.success("🎉 Welcome to Our Mobile Financial Service! 🎉");
               })
               .catch(error=>{
                 console.log(error)

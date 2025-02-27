@@ -3,6 +3,7 @@ import AuthProviderHook from "../../../customHooks/AuthProviderHook";
 import UseAxiosSecure from "../../../customHooks/UseAxiosSecure";
 import verifyPin from "../../../../utils/verifyPin";
 import { moneyTransaction } from "../../../../utils/moneyTransactions";
+import { toast } from "react-toastify";
 
 const SendMoney = () => {
   const { userData, handleError } = AuthProviderHook();
@@ -18,18 +19,18 @@ const SendMoney = () => {
   // Handle Next Step
   const handleNext = async() => {
     if (step === 1 && phone.length < 10) {
-      alert("❌ Please enter a phone number!");
+      toast.error("❌ Please enter a phone number!");
       return;
     }
 
     if (step === 2) {
       let sendAmount = parseFloat(amount);
       if (isNaN(sendAmount) || sendAmount < 50) {
-        alert("❌ Minimum amount to send is 50 Taka.");
+        toast.error("❌ Minimum amount to send is 50 Taka.");
         return;
       }
       if (balance < sendAmount) {
-        alert("❌ Insufficient balance.");
+        toast.error("❌ Insufficient balance.");
         return;
       }
     }
@@ -37,7 +38,7 @@ const SendMoney = () => {
     if (step === 3) {
       const res = await verifyPin(axiosSecure, userData?.email, pin).catch(handleError);
       if (!res) {
-        alert("❌ Wrong PIN number.");
+        toast.error("❌ Wrong PIN number.");
         return; // Stop further execution if PIN is incorrect
       }
     }
@@ -51,7 +52,7 @@ const SendMoney = () => {
     let totalDeducted = sendAmount > 100 ? sendAmount + 5 : sendAmount;
 
     if (totalDeducted > balance) {
-      alert("❌ Insufficient balance.");
+      toast.error("❌ Insufficient balance.");
       return;
     }
 
@@ -66,7 +67,6 @@ const SendMoney = () => {
       amountBeforeTransaction: balance
     }
     const res = await moneyTransaction(axiosSecure, "/sendMoney", transactionInfo).catch(handleError);
-
     setBalance(balance - totalDeducted);
     setMessage(
       `✅ Successfully sent ${sendAmount} Taka. Total deducted: ${totalDeducted} Taka.`
@@ -75,7 +75,7 @@ const SendMoney = () => {
     setPhone("");
     setAmount("");
     setPin("");
-    alert("✅ Confirmed! Money Sent Successfully.");
+    toast.success("✅ Confirmed! Money Sent Successfully.");
   };
 
   return (

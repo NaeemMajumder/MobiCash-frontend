@@ -8,6 +8,8 @@ import {
 import React, { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase.config";
 import UseAxiosSecure from "../customHooks/UseAxiosSecure";
+import UseAxiosPublic from "../customHooks/UseAxiosPublic";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -16,6 +18,8 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const axiosSecure = UseAxiosSecure();
   const [userData, setUserData] = useState();
+  const [balance, setBalances] = useState(userData?.balance);
+  const axiosPublic = UseAxiosPublic();
 
   // E-mail registration
   const registerWithEmail = (email, password) => {
@@ -42,7 +46,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const handleError = (error) => {
-    alert(error.message);
+    toast.error(error.message);
   };
 
   let authInfo = {
@@ -57,6 +61,8 @@ const AuthProvider = ({ children }) => {
     handleError,
     userData,
     setUserData,
+    balance,
+    setBalances,
   };
 
   useEffect(() => {
@@ -64,15 +70,33 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
 
       if (currentUser) {
-        // get data from database
-        axiosSecure
-          .get(`/users?email=${currentUser.email}`)
+        const userInfo = { email: currentUser?.email };
+        axiosPublic
+          .post("/jwt", userInfo)
           .then((res) => {
-            setUserData(res.data);
+            console.log(res.data.token);
+            if (res.data.token) {
+              localStorage.setItem("access-token", res.data.token);
+            }
+            axiosSecure
+              .get(`/users?email=${currentUser.email}`)
+              .then((res) => {
+                setUserData(res.data);
+              })
+              .catch(handleError);
           })
           .catch(handleError);
-      }else{
-        setUser(null)
+
+        // // get data from database
+        // axiosSecure
+        //   .get(`/users?email=${currentUser.email}`)
+        //   .then((res) => {
+        //     setUserData(res.data);
+        //   })
+        //   .catch(handleError);
+      } else {
+        localStorage.removeItem("access-token");
+        setUser(null);
         setUserData(null);
       }
 
@@ -81,7 +105,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [axiosPublic, axiosSecure]);
 
   return (
     <>

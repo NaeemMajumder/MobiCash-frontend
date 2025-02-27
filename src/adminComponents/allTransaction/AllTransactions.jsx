@@ -5,10 +5,8 @@ import Loading from "../../loading/Loading";
 import moment from "moment/moment";
 
 
-const AllTransactions = () => {
-  // use custom ten stack query for data fetch
-  const [allTransactions] = UseAllTransaction();
-  console.log(allTransactions);
+const AllTransactions = ({allTransactions}) => {
+  console.log(allTransactions)
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState("name");
@@ -17,9 +15,6 @@ const AllTransactions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
-  if (!allTransactions) {
-    return <Loading/>; // Prevent filter from running on undefined data
-  }
 
   // Filtering Logic
   const filteredTransactions = allTransactions.filter((transaction) => {
@@ -144,12 +139,11 @@ const AllTransactions = () => {
                 <th className="p-3">Time</th>
                 <th className="p-3">Balance</th>
                 <th className="p-3">Amount</th>
-                <th className="p-3">Actions</th>
               </tr>
             </thead>
             <tbody>
               {currentTransactions.map((transaction, index) => (
-                <tr key={transaction.id} className="border-b text-center">
+                <tr key={transaction._id} className="border-b text-center">
                   <td className="p-3">{indexOfFirstUser + index + 1}</td>
                   <td className="p-3">
                     <img
@@ -167,11 +161,6 @@ const AllTransactions = () => {
                   <td className="p-3">{transaction.amountBeforeTransaction} &#2547;</td>
                   <td className="p-3 text-green-700 font-semibold">
                     {transaction.amountTransaction} &#2547;
-                  </td>
-                  <td className="p-3">
-                    <button className="p-2 bg-blue-500 text-white rounded-md">
-                      <FiEye />
-                    </button>
                   </td>
                 </tr>
               ))}

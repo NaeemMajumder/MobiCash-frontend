@@ -3,6 +3,7 @@ import AuthProviderHook from "../../customHooks/AuthProviderHook";
 import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
 import verifyPin from "../../../utils/verifyPin";
 import { moneyTransaction } from "../../../utils/moneyTransactions";
+import { toast } from "react-toastify";
 
 const WithdrawBalance = () => {
   const { userData, handleError } = AuthProviderHook();
@@ -19,7 +20,7 @@ const WithdrawBalance = () => {
     if (step === 1) {
       // Validate phone number
       if (!/^(\+8801[3-9][0-9]{8})$/.test(withdrawData.phone)) {
-        alert(
+        toast.error(
           "❌ Please enter a valid Bangladeshi phone number (e.g., +8801XXXXXXXXX)."
         );
         return;
@@ -33,7 +34,7 @@ const WithdrawBalance = () => {
         withdrawAmount <= 0 ||
         withdrawAmount > balance
       ) {
-        alert("❌ Please enter a valid withdrawal amount within your balance.");
+        toast.error("❌ Please enter a valid withdrawal amount within your balance.");
         return;
       }
     }
@@ -45,7 +46,7 @@ const WithdrawBalance = () => {
         withdrawData.pin
       ).catch(handleError);
       if (!res) {
-        alert("❌ Wrong PIN number.");
+        toast.error("❌ Wrong PIN number.");
         return; // Stop further execution if PIN is incorrect
       }
     }
@@ -74,7 +75,7 @@ const WithdrawBalance = () => {
     const res = await moneyTransaction(axiosSecure, "/withdrawRequest", withdrawInfo).catch(handleError);
 
     setWithdrawData({ phone: "+880", amount: "", pin: "" });
-    alert(
+    toast.success(
       `✅ Withdrawal of ${withdrawData.amount} Taka has been successfully requested.`
     );
   };

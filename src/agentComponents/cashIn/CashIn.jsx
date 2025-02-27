@@ -3,6 +3,7 @@ import AuthProviderHook from "../../customHooks/AuthProviderHook";
 import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
 import verifyPin from "../../../utils/verifyPin";
 import { moneyTransaction } from "../../../utils/moneyTransactions";
+import { toast } from "react-toastify";
 
 const CashIn = () => {
   const {userData, handleError} = AuthProviderHook();
@@ -23,14 +24,14 @@ const CashIn = () => {
         cashInData.userNumber.length !== 14 ||
         isNaN(cashInData.userNumber.slice(1))
       ) {
-        alert("❌ Please enter a valid 11-digit user number.");
+        toast.error("❌ Please enter a valid 11-digit user number.");
         return;
       }
     }
     if (step === 2) {
       let cashInAmount = parseFloat(cashInData.amount);
       if (isNaN(cashInAmount) || cashInAmount <= 0 || balance < cashInAmount) {
-        alert("❌ Please enter a valid amount.");
+        toast.error("❌ Please enter a valid amount.");
         return;
       }
     }
@@ -40,7 +41,7 @@ const CashIn = () => {
         handleError
       );
       if (!res) {
-        alert("❌ Wrong PIN number.");
+        toast.error("❌ Wrong PIN number.");
         return;
       }
     }
@@ -51,7 +52,7 @@ const CashIn = () => {
   const handleCashIn = async() => {
     let cashInAmount = parseFloat(cashInData.amount);
     setBalance(balance - cashInAmount);
-    alert(
+    toast.success(
       `✅ Cash In Successful! You have added ${cashInData.amount} Taka to your balance.`
     );
     setMessage(

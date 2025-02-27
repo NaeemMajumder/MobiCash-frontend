@@ -2,36 +2,31 @@ import { useState } from "react";
 import { FaBan, FaCheck, FaTimes } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { TiTickOutline } from "react-icons/ti";
+import { UseAllWithdrawsReq } from "../../customHooks/tenStackQuery/UseTenSatack";
+import Loading from "../../loading/Loading";
+import moment from "moment";
+import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
+import AuthProviderHook from "../../customHooks/AuthProviderHook";
+import { toast } from "react-toastify";
 
-const withdrawRequests = [
-  {
-    id: 1,
-    name: "Agent John",
-    email: "john.agent@example.com",
-    phone: "+880123456789",
-    currentBalance: 5000,
-    withdrawAmount: 2000,
-    image: "https://via.placeholder.com/50",
-  },
-  {
-    id: 2,
-    name: "Agent Jane",
-    email: "jane.agent@example.com",
-    phone: "+8801987654321",
-    currentBalance: 3000,
-    withdrawAmount: 1500,
-    image: "https://via.placeholder.com/50",
-  },
-];
 
 const WithdrawRequest = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [withdrawRange, setWithdrawRange] = useState([0, 5000]);
+  const [withdrawRange, setWithdrawRange] = useState([0, 50000]);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
+  const axiosSecure = UseAxiosSecure();
+  const {handleError} = AuthProviderHook();
+
+  const [withdrawsReq, refetch] = UseAllWithdrawsReq();
+  console.log(withdrawsReq);
+
+  if (!withdrawsReq) {
+    return <Loading/>; 
+  }
 
   // Filtering Withdraw Requests
-  const filteredRequests = withdrawRequests
+  const filteredRequests = withdrawsReq
     .filter(
       (user) =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -40,8 +35,8 @@ const WithdrawRequest = () => {
     )
     .filter(
       (user) =>
-        user.withdrawAmount >= withdrawRange[0] &&
-        user.withdrawAmount <= withdrawRange[1]
+        user.withdrawBalance >= withdrawRange[0] &&
+        user.withdrawBalance <= withdrawRange[1]
     );
     
 
@@ -53,6 +48,15 @@ const WithdrawRequest = () => {
     indexOfFirstUser,
     indexOfLastUser
   );
+
+  let handleWithdraw = (id, withdrawStatus, currentRevenueBalance, withdrawBalance, name, email)=>{
+    axiosSecure.put(`/withdrawsReq/${id}`,{id,withdrawStatus,currentRevenueBalance, withdrawBalance, email})
+    .then(res=>{
+      refetch();
+      toast.success(`${name}'s withdraw request ${withdrawStatus}`);
+      console.log(res.data);
+    }).catch(handleError);
+  }
 
   return (
     <>
@@ -112,6 +116,7 @@ const WithdrawRequest = () => {
                   <th className="p-3">Name</th>
                   <th className="p-3">Email</th>
                   <th className="p-3">Phone</th>
+                  <th className="p-3">Date & Time</th>
                   <th className="p-3">Current Revenue</th>
                   <th className="p-3">Withdraw Amount</th>
                   <th className="p-3">Actions</th>
@@ -119,7 +124,7 @@ const WithdrawRequest = () => {
               </thead>
               <tbody>
                 {currentUsers.map((user, index) => (
-                  <tr key={user.id} className="border-b text-center">
+                  <tr key={user._id} className="border-b text-center">
                     <td className="p-3">{indexOfFirstUser + index + 1}</td>
                     <td className="p-3">
                       <img
@@ -131,15 +136,16 @@ const WithdrawRequest = () => {
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>
                     <td className="p-3">{user.phone}</td>
-                    <td className="p-3">{user.currentBalance} &#2547;</td>
+                    <td className="p-3">{moment(user.createdAt).format('DD/MM/YYYY, hh:mm A')}</td>
+                    <td className="p-3">{user.currentRevenueBalance} &#2547;</td>
                     <td className="p-3 font-semibold text-red-500">
-                      {user.withdrawAmount} &#2547;
+                      {user.withdrawBalance} &#2547;
                     </td>
                     <td className="p-3 flex justify-center gap-2">
-                      <button className="cursor-pointer p-2 bg-green-500 text-white rounded-md">
+                      <button onClick={()=>handleWithdraw(user._id, "approved", user.currentRevenueBalance, user.withdrawBalance, user.name, user.email)} className="cursor-pointer p-2 bg-green-500 text-white rounded-md">
                         <TiTickOutline />
                       </button>
-                      <button className="cursor-pointer p-2 bg-red-500 text-white rounded-md">
+                      <button onClick={()=>handleWithdraw(user._id, "rejected",user.currentRevenueBalance, user.withdrawBalance, user.name, user.email)} className="cursor-pointer p-2 bg-red-500 text-white rounded-md">
                         <FaBan />
                       </button>
                     </td>

@@ -2,50 +2,29 @@ import { useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { TiTickOutline } from "react-icons/ti";
+import { UseAllWithdraws } from "../../customHooks/tenStackQuery/UseTenSatack";
+import Loading from "../../loading/Loading";
+import moment from "moment";
 
 
 
 const AllWithdraws = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [withdrawRange, setWithdrawRange] = useState([0, 5000]);
+  const [withdrawRange, setWithdrawRange] = useState([0, 50000]);
   const [statusFilter, setStatusFilter] = useState("");
   const [dateFilter, setDateFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
-  const allWithdrawsAdmin = [
-    {
-      id: 1,
-      name: "Agent John",
-      phone: "+880123456789",
-      withdrawDate: "2025-02-20 10:30 AM",
-      withdrawAmount: 2000,
-      status: "Approved",
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 2,
-      name: "Agent Jane",
-      phone: "+8801987654321",
-      withdrawDate: "2025-02-18 2:15 PM",
-      withdrawAmount: 1500,
-      status: "Pending",
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 3,
-      name: "Agent Mike",
-      phone: "+8801346798520",
-      withdrawDate: "2025-02-22 11:00 AM",
-      withdrawAmount: 3000,
-      status: "Rejected",
-      image: "https://via.placeholder.com/50",
-    },
-  ];
-  
+  const [allWithdraws] = UseAllWithdraws();
+  console.log(allWithdraws);
+
+  if (!allWithdraws) {
+    return <Loading/>; // Prevent filter from running on undefined data
+  }
 
   // Filtering Withdraws
-  const filteredWithdraws = allWithdrawsAdmin
+  const filteredWithdraws = allWithdraws
     .filter(
       (user) =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -53,15 +32,16 @@ const AllWithdraws = () => {
     )
     .filter(
       (user) =>
-        user.withdrawAmount >= withdrawRange[0] &&
-        user.withdrawAmount <= withdrawRange[1]
+        user.withdrawBalance >= withdrawRange[0] &&
+        user.withdrawBalance <= withdrawRange[1]
     )
     .filter((user) =>
-      statusFilter ? user.status.toLowerCase() === statusFilter.toLowerCase() : true
+      statusFilter ? user.withdrawStatus.toLowerCase() === statusFilter.toLowerCase() : true
     )
     .filter((user) =>
-      dateFilter ? user.withdrawDate.includes(dateFilter) : true
+      dateFilter ? moment(user.createdAt).format('DD/MM/YYYY, hh:mm A').includes(dateFilter) : true
     );
+    console.log(filteredWithdraws);
 
   // Pagination Logic
   const totalWithdraws = filteredWithdraws.length;
@@ -151,6 +131,7 @@ const AllWithdraws = () => {
                   <th className="p-3">Image</th>
                   <th className="p-3">Name</th>
                   <th className="p-3">Phone</th>
+                  <th className="p-3">withdraw ID</th>
                   <th className="p-3">Withdraw Date</th>
                   <th className="p-3">Withdraw Amount</th>
                   <th className="p-3">Status</th>
@@ -169,16 +150,17 @@ const AllWithdraws = () => {
                     </td>
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.phone}</td>
-                    <td className="p-3">{user.withdrawDate}</td>
+                    <td className="p-3">{user.withdrawId}</td>
+                    <td className="p-3">{moment(user.createdAt).format('DD/MM/YYYY, hh:mm A')}</td>
                     <td className="p-3 font-semibold text-red-500">
-                      {user.withdrawAmount} &#2547;
+                      {user.withdrawBalance} &#2547;
                     </td>
                     <td className="p-3">
-                      {user.status === "Approved" ? (
+                      {user.withdrawStatus === "approved" ? (
                         <span className="text-green-500 font-semibold">
                           Approved
                         </span>
-                      ) : user.status === "Pending" ? (
+                      ) : user.withdrawStatus === "pending" ? (
                         <span className="text-yellow-500 font-semibold">
                           Pending
                         </span>

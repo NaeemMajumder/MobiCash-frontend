@@ -1,14 +1,14 @@
 import { FiSend, FiClock, FiDollarSign, FiArrowDownCircle } from "react-icons/fi";
+import AuthProviderHook from "../../customHooks/AuthProviderHook";
 
 const UserDash = () => {
-  const userBalance = 12500;
-  const totalSent = 50000;
-  const totalCashout = 20000;
   const lastTransaction = {
     amount: 3000,
     date: "2025-02-25 14:30",
     transactionId: "TXN789456",
   };
+
+  let {userData} = AuthProviderHook();
 
   return (
     <section className="w-full p-6 flex flex-col items-center">
@@ -19,21 +19,21 @@ const UserDash = () => {
         <div className="bg-white p-6 shadow-md rounded-lg flex flex-col items-center">
           <FiDollarSign className="text-blue-600 text-4xl" />
           <p className="text-gray-700 text-lg mt-2">Current Balance</p>
-          <p className="text-2xl font-bold text-green-600">৳{userBalance}</p>
+          <p className="text-2xl font-bold text-green-600">৳{userData?.currentBalance}</p>
         </div>
 
         {/* Total Sent Money */}
         <div className="bg-white p-6 shadow-md rounded-lg flex flex-col items-center">
           <FiSend className="text-orange-500 text-4xl" />
           <p className="text-gray-700 text-lg mt-2">Total Sent Money</p>
-          <p className="text-2xl font-bold text-red-600">৳{totalSent}</p>
+          <p className="text-2xl font-bold text-red-600">৳{userData?.totalSendMoney}</p>
         </div>
 
         {/* Total Cashout Amount */}
         <div className="bg-white p-6 shadow-md rounded-lg flex flex-col items-center">
           <FiArrowDownCircle className="text-teal-600 text-4xl" />
           <p className="text-gray-700 text-lg mt-2">Total Cashout</p>
-          <p className="text-2xl font-bold text-blue-600">৳{totalCashout}</p>
+          <p className="text-2xl font-bold text-blue-600">৳{userData?.totalCashOut}</p>
         </div>
 
         {/* Last Transaction */}

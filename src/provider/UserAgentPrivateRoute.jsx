@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
+import { toast } from "react-toastify";
 
 const UserAgentPrivateRoute = ({ children }) => {
   let { user, loading, userData, setUser, signOutUser, handleError } =
@@ -12,7 +13,7 @@ const UserAgentPrivateRoute = ({ children }) => {
       signOutUser()
         .then(() => {
           setUser(null);
-          alert("login in an ADMIN account");
+          toast.error("login in an ADMIN account");
         })
         .catch(handleError);
     }

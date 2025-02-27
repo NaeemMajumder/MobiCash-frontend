@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { FiUsers, FiUserCheck, FiDollarSign, FiBarChart2 } from "react-icons/fi";
+import AuthProviderHook from "../../customHooks/AuthProviderHook";
 
 const AdminDash = () => {
+  const {userData} = AuthProviderHook();
+
   const [dashboardData, setDashboardData] = useState({
     totalAmount: 0,
     totalRevenue: 0,
@@ -31,7 +34,7 @@ const AdminDash = () => {
           <FiDollarSign size={32} className="text-green-600" />
           <div>
             <p className="text-gray-500">Total Amount in System</p>
-            <h2 className="text-xl font-bold">৳{dashboardData.totalAmount.toLocaleString()}</h2>
+            <h2 className="text-xl font-bold">৳{userData?.adminTotalAmount.toLocaleString()}</h2>
           </div>
         </div>
 
@@ -40,7 +43,7 @@ const AdminDash = () => {
           <FiBarChart2 size={32} className="text-purple-600" />
           <div>
             <p className="text-gray-500">Admin Total Revenue</p>
-            <h2 className="text-xl font-bold">৳{dashboardData.totalRevenue.toLocaleString()}</h2>
+            <h2 className="text-xl font-bold">৳{userData?.adminTotalRevenue.toLocaleString()}</h2>
           </div>
         </div>
 

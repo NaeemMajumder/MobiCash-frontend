@@ -3,6 +3,7 @@ import UseAxiosSecure from "../../../customHooks/UseAxiosSecure";
 import AuthProviderHook from "../../../customHooks/AuthProviderHook";
 import verifyPin from "../../../../utils/verifyPin";
 import { moneyTransaction } from "../../../../utils/moneyTransactions";
+import { toast } from "react-toastify";
 
 const CashOut = () => {
   const { userData, handleError } = AuthProviderHook();
@@ -17,20 +18,20 @@ const CashOut = () => {
   // Handle Next Step
   const handleNext = async () => {
     if (step === 1 && (agentNumber.length < 10 || isNaN(agentNumber))) {
-      alert("❌ Please enter a valid 11-digit agent number.");
+      toast.error("❌ Please enter a valid 11-digit agent number.");
       return;
     }
 
     if (step === 2) {
       let cashOutAmount = parseFloat(amount);
       if (isNaN(cashOutAmount) || cashOutAmount <= 0) {
-        alert("❌ Please enter a valid amount.");
+        toast.error("❌ Please enter a valid amount.");
         return;
       }
 
       let totalDeducted = cashOutAmount * 1.015; // 1.5% fee added
       if (totalDeducted > balance) {
-        alert("❌ Insufficient balance.");
+        toast.error("❌ Insufficient balance.");
         return;
       }
     }
@@ -40,7 +41,7 @@ const CashOut = () => {
         handleError
       );
       if (!res) {
-        alert("❌ Wrong PIN number.");
+        toast.error("❌ Wrong PIN number.");
         return; // Stop further execution if PIN is incorrect
       }
     }
@@ -79,7 +80,7 @@ const CashOut = () => {
     setAgentNumber("");
     setAmount("");
     setPin("");
-    alert("✅ Cash Out Successful!");
+    toast.success("✅ Cash Out Successful!");
   };
 
   return (

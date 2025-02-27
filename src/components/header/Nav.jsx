@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import AuthProviderHook from "../../customHooks/AuthProviderHook";
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Import React Icons
+import { toast } from "react-toastify";
 
 const Nav = () => {
   const [showBalance, setShowBalance] = useState(false);
-  const { user, userData, setUser, signOutUser, handleError } = AuthProviderHook();
-  const balance = userData?.currentBalance;
+  const {
+    user,
+    userData,
+    setUser,
+    signOutUser,
+    handleError,
+    balance,
+    setBalances,
+  } = AuthProviderHook();
+  // const [balance, setBalance] = useState(userData?.currentBalance);
+
   const navigate = useNavigate();
-  
+
+  useEffect(() => {
+    if (userData?.currentBalance !== undefined) {
+      setBalances(userData.currentBalance);
+    }
+  }, [userData]);
+
   const links = (
     <>
       <li>
@@ -17,21 +33,23 @@ const Nav = () => {
       <li>
         <NavLink to="/services">Services</NavLink>
       </li>
-      <li>
-        <NavLink to="/cashRequest">Cash Request</NavLink>
-      </li>
+      {userData?.role === "Agent" && (
+        <li>
+          <NavLink to="/cashRequest">Cash Request</NavLink>
+        </li>
+      )}
     </>
   );
 
-  let handleLogOut = ()=>{
+  let handleLogOut = () => {
     signOutUser()
       .then(() => {
         setUser(null);
         navigate("/login");
-        alert("signout successful");
+        toast.success("signout successful");
       })
       .catch(handleError);
-  }
+  };
 
   return (
     <>

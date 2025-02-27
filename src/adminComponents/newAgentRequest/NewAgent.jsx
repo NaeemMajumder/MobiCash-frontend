@@ -4,35 +4,20 @@ import { TiTickOutline } from "react-icons/ti";
 import { FaBan } from "react-icons/fa";
 import { UseNewUserRequest } from "../../customHooks/tenStackQuery/UseTenSatack";
 import Loading from "../../loading/Loading";
-
-const agentRequests = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    email: "alice@example.com",
-    phone: "+880123456789",
-    status: "Pending",
-    image: "demo",
-  },
-  {
-    id: 2,
-    name: "Bob Williams",
-    email: "bob@example.com",
-    phone: "+8801987654321",
-    status: "Pending",
-    image: "demo",
-  },
-  // Add more agent requests here
-];
+import { Link } from "react-router-dom";
+import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
+import { toast } from "react-toastify";
 
 const NewAgent = () => {
   const [searchType, setSearchType] = useState("name");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const agentsPerPage = 10;
+  const axiosSecure = UseAxiosSecure();
+
 
   // tenstack query data fetch
-  const [newUsersRequest] = UseNewUserRequest();
+  const [newUsersRequest, refetch] = UseNewUserRequest();
   console.log(newUsersRequest);
 
   if (!newUsersRequest) {
@@ -59,6 +44,15 @@ const NewAgent = () => {
     indexOfFirstAgent,
     indexOfLastAgent
   );
+
+  let handleStatus = (accountStatus, id, name)=>{
+    let status = accountStatus === "active" ? "banned":"active";
+    axiosSecure.put(`/user/${id}`,{status,id})
+    .then(res=>{
+      refetch();
+      toast.success(`${name} is ${status} now`);
+    })
+  }
 
   return (
     <section className="w-full bg-[#F2F6FE] inter">
@@ -106,7 +100,7 @@ const NewAgent = () => {
             </thead>
             <tbody>
               {currentAgents.map((agent, index) => (
-                <tr key={agent.id} className="border-b">
+                <tr key={agent._id} className="border-b">
                   <td className="p-3">{indexOfFirstAgent + index + 1}</td>
                   <td className="p-3">
                     <img
@@ -132,13 +126,13 @@ const NewAgent = () => {
                     </span>
                   </td>
                   <td className="p-3 flex justify-center gap-2">
-                    <button className="p-2 bg-blue-500 text-white rounded-md">
+                    <Link to={`/profile/details/${agent._id}`} className="p-2 bg-blue-500 text-white rounded-md">
                       <FiEye />
-                    </button>
-                    <button className="p-2 bg-green-500 text-white rounded-md">
+                    </Link>
+                    <button onClick={()=>handleStatus("active", agent._id, agent.name)} className="p-2 cursor-pointer bg-green-500 text-white rounded-md">
                       <TiTickOutline />
                     </button>
-                    <button className="p-2 bg-red-500 text-white rounded-md">
+                    <button onClick={()=>handleStatus("banned", agent._id, agent.name)} className="p-2 cursor-pointer bg-red-500 text-white rounded-md">
                       <FaBan />
                     </button>
                   </td>

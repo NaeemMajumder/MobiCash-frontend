@@ -1,33 +1,8 @@
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
-
-const withdrawHistoryData = [
-  {
-    id: 1,
-    withdrawId: "WD123456",
-    time: "2025-02-25 14:30",
-    currentAmount: 5000,
-    withdrawAmount: 1500,
-    status: "Pending",
-  },
-  {
-    id: 2,
-    withdrawId: "WD654321",
-    time: "2025-02-26 10:00",
-    currentAmount: 3000,
-    withdrawAmount: 2000,
-    status: "Approved",
-  },
-  {
-    id: 3,
-    withdrawId: "WD65d4321",
-    time: "2025-02-26 10:00",
-    currentAmount: 4000,
-    withdrawAmount: 2000,
-    status: "Rejected",
-  },
-  // Add more demo withdrawal requests here
-];
+import { UseAgentWithdraw } from "../../customHooks/tenStackQuery/UseTenSatack";
+import Loading from "../../loading/Loading";
+import moment from "moment";
 
 const WithdrawHistory = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,8 +11,15 @@ const WithdrawHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
+  const [agentWithdraw] = UseAgentWithdraw();
+  console.log(agentWithdraw);
+
+  if (!agentWithdraw) {
+    return <Loading/>; 
+  }
+
   // Filtering Logic
-  const filteredWithdrawals = withdrawHistoryData
+  const filteredWithdrawals = agentWithdraw
     .filter((withdrawal) => {
       if (searchQuery) {
         return withdrawal.withdrawId.includes(searchQuery);
@@ -46,11 +28,11 @@ const WithdrawHistory = () => {
     })
     .filter(
       (withdrawal) =>
-        new Date(withdrawal.time) >= new Date(dateRange[0]) &&
-        new Date(withdrawal.time) <= new Date(dateRange[1])
+        new Date(withdrawal.createdAt) >= new Date(dateRange[0]) &&
+        new Date(withdrawal.createdAt) <= new Date(dateRange[1])
     )
     .filter((withdrawal) =>
-      statusFilter === "All" ? true : withdrawal.status === statusFilter
+      statusFilter === "All" ? true : withdrawal.withdrawStatus === statusFilter
     );
 
   // Pagination Logic
@@ -107,9 +89,9 @@ const WithdrawHistory = () => {
             onChange={(e) => setStatusFilter(e.target.value)}
           >
             <option value="All">All Statuses</option>
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
           </select>
         </div>
 
@@ -128,25 +110,25 @@ const WithdrawHistory = () => {
             </thead>
             <tbody>
               {currentWithdrawals.map((withdrawal, index) => (
-                <tr key={withdrawal.id} className="border-b text-center">
+                <tr key={withdrawal._id} className="border-b text-center">
                   <td className="p-3">{indexOfFirstWithdrawal + index + 1}</td>
                   <td className="p-3">{withdrawal.withdrawId}</td>
-                  <td className="p-3">{withdrawal.time}</td>
-                  <td className="p-3">{withdrawal.currentAmount} &#2547;</td>
+                  <td className="p-3">{moment(withdrawal.createdAt).format('DD/MM/YYYY, hh:mm A')}</td>
+                  <td className="p-3">{withdrawal.currentRevenueBalance} &#2547;</td>
                   <td className="p-3 text-green-700 font-semibold">
-                    {withdrawal.withdrawAmount} &#2547;
+                    {withdrawal.withdrawBalance} &#2547;
                   </td>
                   <td className="p-3">
                     <span
                       className={`${
-                        withdrawal.status === "Pending"
+                        withdrawal.withdrawStatus === "pending"
                           ? "bg-yellow-500 text-white"
-                          : withdrawal.status === "Approved"
+                          : withdrawal.withdrawStatus === "approved"
                           ? "bg-green-500 text-white"
                           : "bg-red-500 text-white"
                       } px-3 py-1 rounded-full`}
                     >
-                      {withdrawal.status}
+                      {withdrawal.withdrawStatus}
                     </span>
                   </td>
                 </tr>

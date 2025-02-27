@@ -2,36 +2,29 @@ import { useState } from "react";
 import { FaBan, FaCheck, FaTimes } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { TiTickOutline } from "react-icons/ti";
+import { UseAllCashReq } from "../../customHooks/tenStackQuery/UseTenSatack";
+import Loading from "../../loading/Loading";
+import moment from "moment";
+import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
+import { toast } from "react-toastify";
 
-const withdrawRequests = [
-  {
-    id: 1,
-    name: "Agent John",
-    email: "john.agent@example.com",
-    phone: "+880123456789",
-    currentBalance: 5000,
-    cashRequestAmount: 2000,
-    image: "https://via.placeholder.com/50",
-  },
-  {
-    id: 2,
-    name: "Agent Jane",
-    email: "jane.agent@example.com",
-    phone: "+8801987654321",
-    currentBalance: 3000,
-    cashRequestAmount: 1500,
-    image: "https://via.placeholder.com/50",
-  },
-];
 
 const CashApprove = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [withdrawRange, setWithdrawRange] = useState([0, 5000]);
+  const [withdrawRange, setWithdrawRange] = useState([0, 5000000]);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
+  const axiosSecure = UseAxiosSecure();
+
+  const [cashReq, refetch] = UseAllCashReq();
+  console.log(cashReq);
+
+  if (!cashReq) {
+    return <Loading/>;
+  }
 
   // Filtering Withdraw Requests
-  const filteredRequests = withdrawRequests
+  const filteredRequests = cashReq
     .filter(
       (user) =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -40,8 +33,8 @@ const CashApprove = () => {
     )
     .filter(
       (user) =>
-        user.cashRequestAmount >= withdrawRange[0] &&
-        user.cashRequestAmount <= withdrawRange[1]
+        user.cashRequestedAmount >= withdrawRange[0] &&
+        user.cashRequestedAmount <= withdrawRange[1]
     );
     
 
@@ -53,6 +46,15 @@ const CashApprove = () => {
     indexOfFirstUser,
     indexOfLastUser
   );
+
+  let handleCashReq = (id, amount, email, status)=>{
+    axiosSecure.put(`/cashReq/${id}`, {id, amount, email, status})
+    .then(res=>{
+      console.log(res.data);
+      refetch();
+      toast.success(`cash request is ${status}`)
+    })
+  }
 
   return (
     <>
@@ -112,6 +114,7 @@ const CashApprove = () => {
                   <th className="p-3">Name</th>
                   <th className="p-3">Email</th>
                   <th className="p-3">Phone</th>
+                  <th className="p-3">Date & Time</th>
                   <th className="p-3">Current Balance</th>
                   <th className="p-3">Cash Request Amount</th>
                   <th className="p-3">Actions</th>
@@ -131,15 +134,16 @@ const CashApprove = () => {
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>
                     <td className="p-3">{user.phone}</td>
+                    <td className="p-3">{moment(user.createdAt).format('DD/MM/YYYY, hh:mm A')}</td>
                     <td className="p-3">{user.currentBalance} &#2547;</td>
                     <td className="p-3 font-semibold text-red-500">
-                      {user.cashRequestAmount} &#2547;
+                      {user.cashRequestedAmount} &#2547;
                     </td>
                     <td className="p-3 flex justify-center gap-2">
-                      <button className="cursor-pointer p-2 bg-green-500 text-white rounded-md">
+                      <button onClick={()=>handleCashReq(user._id, user.cashRequestedAmount, user.email, "approved")} className="cursor-pointer p-2 bg-green-500 text-white rounded-md">
                         <TiTickOutline />
                       </button>
-                      <button className="cursor-pointer p-2 bg-red-500 text-white rounded-md">
+                      <button onClick={()=>handleCashReq(user._id, user.cashRequestedAmount, user.email, "rejected")} className="cursor-pointer p-2 bg-red-500 text-white rounded-md">
                         <FaBan />
                       </button>
                     </td>

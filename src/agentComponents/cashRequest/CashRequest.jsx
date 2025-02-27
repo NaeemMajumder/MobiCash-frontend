@@ -3,6 +3,7 @@ import { FiX, FiSend } from "react-icons/fi";
 import AuthProviderHook from "../../customHooks/AuthProviderHook";
 import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
 import { moneyTransaction } from "../../../utils/moneyTransactions";
+import { toast } from "react-toastify";
 
 const CashRequest = () => {
   const {userData, handleError} = AuthProviderHook();
@@ -14,7 +15,7 @@ const CashRequest = () => {
 
   const handleNext = () => {
     if (amount < 50000) {
-      alert("Amount must be at least 50,000!");
+      toast.error("Amount must be at least 50,000!");
       return;
     }
     setStep(2);
@@ -33,7 +34,7 @@ const CashRequest = () => {
     const res = await moneyTransaction(axiosSecure, "/cashRequest", cashReqInfo).catch(handleError);
     console.log(res);
 
-    alert(`Cash request of ৳${amount} sent successfully!`);
+    toast.success(`Cash request of ৳${amount} sent successfully!`);
     setIsOpen(false);
     setStep(1);
   };

@@ -4,6 +4,9 @@ import { FiEye, FiSearch, FiFilter, FiX, FiUserCheck } from "react-icons/fi";
 import { TiTickOutline } from "react-icons/ti";
 import { UseAllUsers } from "../../customHooks/tenStackQuery/UseTenSatack";
 import Loading from "../../loading/Loading";
+import { Link } from "react-router-dom";
+import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
+import { toast } from "react-toastify";
 
 const AllUsers = () => {
   const [searchType, setSearchType] = useState("name");
@@ -12,9 +15,10 @@ const AllUsers = () => {
   const [balanceRange, setBalanceRange] = useState([0, 100000]);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
+  const axiosSecure = UseAxiosSecure();
 
   // tenstack query data fetch
-  const [allUsers] = UseAllUsers();
+  const [allUsers, refetch] = UseAllUsers();
   console.log(allUsers);
 
   if (!allUsers) {
@@ -49,6 +53,17 @@ const AllUsers = () => {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+  let handleStatus = (accountStatus, id, name)=>{
+
+    let status = accountStatus === "active" ? "banned":"active";
+    axiosSecure.put(`/user/${id}`,{status,id})
+    .then(res=>{
+      refetch();
+      toast.success(`${name} is ${status} now`);
+    })
+
+  }
 
   return (
     <>
@@ -133,7 +148,7 @@ const AllUsers = () => {
               </thead>
               <tbody>
                 {currentUsers.map((user, index) => (
-                  <tr key={user.id} className="border-b text-center">
+                  <tr key={user._id} className="border-b text-center">
                     <td className="p-3">{indexOfFirstUser + index + 1}</td>
                     <td className="p-3">
                       <img
@@ -179,11 +194,11 @@ const AllUsers = () => {
                       </span>
                     </td>
                     <td className="p-3 flex justify-center gap-2">
-                      <button className="p-2 bg-blue-500 text-white rounded-md">
+                      <Link to={`/profile/details/${user._id}`} className="p-2 bg-blue-500 text-white rounded-md">
                         <FiEye />
-                      </button>
-                      <button
-                        className={`p-2 rounded-md ${
+                      </Link>
+                      <button onClick={()=>handleStatus(user?.accountStatus, user._id, user.name)}
+                        className={`p-2 cursor-pointer rounded-md ${
                           user.accountStatus === "active"
                             ? "bg-red-500"
                             : "bg-green-500"
@@ -192,7 +207,7 @@ const AllUsers = () => {
                         {user.accountStatus === "active" ? (
                           <FaBan />
                         ) : (
-                          <TiTickOutline />
+                          <TiTickOutline/>
                         )}
                       </button>
                     </td>
