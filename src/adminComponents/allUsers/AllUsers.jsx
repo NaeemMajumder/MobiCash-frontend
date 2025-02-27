@@ -2,41 +2,27 @@ import { useState } from "react";
 import { FaBan } from "react-icons/fa";
 import { FiEye, FiSearch, FiFilter, FiX, FiUserCheck } from "react-icons/fi";
 import { TiTickOutline } from "react-icons/ti";
-
-const usersData = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "+880123456789",
-    balance: 5000,
-    role: "User",
-    status: "Active",
-    image: "https://via.placeholder.com/50",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane@example.com",
-    phone: "+8801987654321",
-    balance: 3000,
-    role: "Agent",
-    status: "Banned",
-    image: "https://via.placeholder.com/50",
-  },
-  // Add more users here
-];
+import { UseAllUsers } from "../../customHooks/tenStackQuery/UseTenSatack";
+import Loading from "../../loading/Loading";
 
 const AllUsers = () => {
   const [searchType, setSearchType] = useState("name");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
-  const [balanceRange, setBalanceRange] = useState([0, 10000]);
+  const [balanceRange, setBalanceRange] = useState([0, 100000]);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
+  // tenstack query data fetch
+  const [allUsers] = UseAllUsers();
+  console.log(allUsers);
+
+  if (!allUsers) {
+    return <Loading />; // Prevent filter from running on undefined data
+  }
+
   // Filtering Users
-  const filteredUsers = usersData
+  const filteredUsers = allUsers
     .filter((user) => {
       if (searchQuery) {
         if (searchType === "name")
@@ -48,12 +34,15 @@ const AllUsers = () => {
       return true;
     })
     .filter((user) =>
-      statusFilter === "All" ? true : user.status === statusFilter
+      statusFilter === "All" ? true : user.accountStatus === statusFilter
     )
     .filter(
       (user) =>
-        user.balance >= balanceRange[0] && user.balance <= balanceRange[1]
+        user.currentBalance >= balanceRange[0] &&
+        user.currentBalance <= balanceRange[1]
     );
+
+  console.log(filteredUsers);
 
   // Pagination Logic
   const totalUsers = filteredUsers.length;
@@ -99,8 +88,8 @@ const AllUsers = () => {
               onChange={(e) => setStatusFilter(e.target.value)}
             >
               <option value="All">All</option>
-              <option value="Active">Active</option>
-              <option value="Banned">Banned</option>
+              <option value="active">Active</option>
+              <option value="banned">Banned</option>
             </select>
 
             {/* Balance Range Filter */}
@@ -156,13 +145,13 @@ const AllUsers = () => {
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>
                     <td className="p-3">{user.phone}</td>
-                    <td className="p-3">{user.balance} &#2547;</td>
+                    <td className="p-3">{user.currentBalance} &#2547;</td>
                     <td className="p-3">{user.role}</td>
                     <td className="p-3">
                       <span
                         className={`px-2 py-1 rounded text-white flex flex-col justify-center items-center`}
                       >
-                        {user.status === "Active" ? (
+                        {user.accountStatus === "active" ? (
                           <>
                             <img
                               width="15"
@@ -170,7 +159,9 @@ const AllUsers = () => {
                               src="https://img.icons8.com/external-those-icons-lineal-color-those-icons/24/external-Burn-user-actions-those-icons-lineal-color-those-icons.png"
                               alt="external-Burn-user-actions-those-icons-lineal-color-those-icons"
                             />
-                            <span className="text-green-500 text-sm">{user.status}</span>
+                            <span className="text-green-500 text-sm">
+                              {user.accountStatus}
+                            </span>
                           </>
                         ) : (
                           <>
@@ -180,7 +171,9 @@ const AllUsers = () => {
                               src="https://img.icons8.com/pulsar-gradient/19/remove-user-female.png"
                               alt="remove-user-female"
                             />
-                            <span className="text-red-500 text-sm">{user.status}</span>
+                            <span className="text-red-500 text-sm">
+                              {user.accountStatus}
+                            </span>
                           </>
                         )}
                       </span>
@@ -191,12 +184,12 @@ const AllUsers = () => {
                       </button>
                       <button
                         className={`p-2 rounded-md ${
-                          user.status === "Active"
+                          user.accountStatus === "active"
                             ? "bg-red-500"
                             : "bg-green-500"
                         } text-white`}
                       >
-                        {user.status === "Active" ? (
+                        {user.accountStatus === "active" ? (
                           <FaBan />
                         ) : (
                           <TiTickOutline />

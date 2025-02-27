@@ -1,35 +1,15 @@
 import { useState } from "react";
 import { FiEye, FiSearch } from "react-icons/fi";
+import {UseAllTransaction} from "../../customHooks/tenStackQuery/UseTenSatack";
+import Loading from "../../loading/Loading";
+import moment from "moment/moment";
 
-const transactionsData = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "+880123456789",
-    transactionId: "TXN123456",
-    transactionTime: "2025-02-25 14:30",
-    balance: 5000,
-    transactionAmount: 1500,
-    role: "User",
-    image: "https://via.placeholder.com/50",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane@example.com",
-    phone: "+8801987654321",
-    transactionId: "TXN654321",
-    transactionTime: "2025-02-25 15:00",
-    balance: 3000,
-    transactionAmount: 2000,
-    role: "Agent",
-    image: "https://via.placeholder.com/50",
-  },
-  // Add more demo transactions here
-];
 
 const AllTransactions = () => {
+  // use custom ten stack query for data fetch
+  const [allTransactions] = UseAllTransaction();
+  console.log(allTransactions);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState("name");
   const [roleFilter, setRoleFilter] = useState("All");
@@ -37,15 +17,23 @@ const AllTransactions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
+  if (!allTransactions) {
+    return <Loading/>; // Prevent filter from running on undefined data
+  }
+
   // Filtering Logic
-  const filteredTransactions = transactionsData
-    .filter((transaction) => {
+  const filteredTransactions = allTransactions.filter((transaction) => {
       if (searchQuery) {
         if (searchType === "name")
-          return transaction.name.toLowerCase().includes(searchQuery.toLowerCase());
+          return transaction.name
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
         if (searchType === "email")
-          return transaction.email.toLowerCase().includes(searchQuery.toLowerCase());
-        if (searchType === "phone") return transaction.phone.includes(searchQuery);
+          return transaction.email
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+        if (searchType === "phoneNumber")
+          return transaction.phoneNumber.includes(searchQuery);
       }
       return true;
     })
@@ -54,21 +42,30 @@ const AllTransactions = () => {
     )
     .filter(
       (transaction) =>
-        transaction.transactionAmount >= transactionRange[0] &&
-        transaction.transactionAmount <= transactionRange[1]
+        transaction.amountTransaction >= transactionRange[0] &&
+        transaction.amountTransaction <= transactionRange[1]
     );
+
+    console.log(filteredTransactions)
 
   // Pagination Logic
   const totalTransactions = filteredTransactions.length;
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentTransactions = filteredTransactions.slice(indexOfFirstUser, indexOfLastUser);
+  const currentTransactions = filteredTransactions.slice(
+    indexOfFirstUser,
+    indexOfLastUser
+  );
 
   return (
     <section className="w-full bg-[#F2F6FE] inter">
       <div className="p-6 min-h-screen width">
-        <h1 className="text-3xl font-bold text-[#164193] mb-4">Admin - User Transactions</h1>
-        <p className="text-lg font-semibold">Total Transactions: {totalTransactions}</p>
+        <h1 className="text-3xl font-bold text-[#164193] mb-4">
+          Admin - User Transactions
+        </h1>
+        <p className="text-lg font-semibold">
+          Total Transactions: {totalTransactions}
+        </p>
 
         {/* Filters */}
         <div className="flex flex-wrap gap-4 mt-4">
@@ -110,14 +107,24 @@ const AllTransactions = () => {
               type="number"
               className="p-2 border rounded-md w-20"
               value={transactionRange[0]}
-              onChange={(e) => setTransactionRange([Number(e.target.value), transactionRange[1]])}
+              onChange={(e) =>
+                setTransactionRange([
+                  Number(e.target.value),
+                  transactionRange[1],
+                ])
+              }
             />
             <span>-</span>
             <input
               type="number"
               className="p-2 border rounded-md w-20"
               value={transactionRange[1]}
-              onChange={(e) => setTransactionRange([transactionRange[0], Number(e.target.value)])}
+              onChange={(e) =>
+                setTransactionRange([
+                  transactionRange[0],
+                  Number(e.target.value),
+                ])
+              }
             />
           </div>
         </div>
@@ -145,16 +152,22 @@ const AllTransactions = () => {
                 <tr key={transaction.id} className="border-b text-center">
                   <td className="p-3">{indexOfFirstUser + index + 1}</td>
                   <td className="p-3">
-                    <img src={transaction.image} alt="User" className="w-10 h-10 rounded-full mx-auto" />
+                    <img
+                      src={transaction.image}
+                      alt="User"
+                      className="w-10 h-10 rounded-full mx-auto"
+                    />
                   </td>
                   <td className="p-3">{transaction.name}</td>
                   <td className="p-3">{transaction.email}</td>
-                  <td className="p-3">{transaction.phone}</td>
+                  <td className="p-3">{transaction.phoneNumber}</td>
                   <td className="p-3">{transaction.role}</td>
                   <td className="p-3">{transaction.transactionId}</td>
-                  <td className="p-3">{transaction.transactionTime}</td>
-                  <td className="p-3">{transaction.balance} &#2547;</td>
-                  <td className="p-3 text-green-700 font-semibold">{transaction.transactionAmount} &#2547;</td>
+                  <td className="p-3">{moment(transaction.createdAt).format('DD/MM/YYYY, hh:mm A')}</td>
+                  <td className="p-3">{transaction.amountBeforeTransaction} &#2547;</td>
+                  <td className="p-3 text-green-700 font-semibold">
+                    {transaction.amountTransaction} &#2547;
+                  </td>
                   <td className="p-3">
                     <button className="p-2 bg-blue-500 text-white rounded-md">
                       <FiEye />
@@ -166,7 +179,8 @@ const AllTransactions = () => {
           </table>
           {/* Pagination */}
           <div className="mt-4 flex justify-center">
-              {[...Array(Math.ceil(totalTransactions / usersPerPage))].map((_, i) => (
+            {[...Array(Math.ceil(totalTransactions / usersPerPage))].map(
+              (_, i) => (
                 <button
                   key={i}
                   className={`p-2 mx-1 rounded-md ${
@@ -178,8 +192,9 @@ const AllTransactions = () => {
                 >
                   {i + 1}
                 </button>
-              ))}
-            </div>
+              )
+            )}
+          </div>
         </div>
       </div>
     </section>
