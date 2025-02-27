@@ -60,10 +60,8 @@ const CashIn = () => {
       } Taka. My current balance is ${balance - cashInAmount} Taka.`
     );
 
-    cashInData.email = "agent@gmail.com";
     cashInData.currentBalance = balance - cashInAmount;
     cashInData.amount = parseFloat(cashInData.amount);
-    console.log(cashInData);
 
     let cashIn = {
       email: userData?.email,
@@ -76,7 +74,6 @@ const CashIn = () => {
       amountBeforeTransaction: balance,
     };
     const res = await moneyTransaction(axiosSecure, "/cashIn", cashIn).catch(handleError);
-    console.log(res);
 
     setStep(0);
     setCashInData({ userNumber: "+880", amount: "", pin: "" });

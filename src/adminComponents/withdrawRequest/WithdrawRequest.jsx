@@ -112,7 +112,7 @@ const WithdrawRequest = () => {
                   <th className="p-3">Name</th>
                   <th className="p-3">Email</th>
                   <th className="p-3">Phone</th>
-                  <th className="p-3">Current Balance</th>
+                  <th className="p-3">Current Revenue</th>
                   <th className="p-3">Withdraw Amount</th>
                   <th className="p-3">Actions</th>
                 </tr>
