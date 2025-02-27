@@ -5,6 +5,8 @@ MobiCash is a digital financial services platform designed to facilitate secure 
 
 MobiCash empowers users in Bangladesh to manage their finances efficiently with a user-friendly interface and real-time transaction processing.
 
+<img src="./public/images/mobiCash.jpg" alt="Stop Corruption">
+
 ## 🌐 Live Links
 - **Frontend:** [MobiCash Frontend](https://mobicash-528e2.web.app/)
 - **Backend:** [MobiCash Backend](https://mobi-cash-backend.vercel.app/)

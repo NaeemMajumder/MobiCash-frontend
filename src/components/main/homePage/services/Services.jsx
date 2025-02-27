@@ -8,25 +8,25 @@ const Services = () => {
       title: "Fast Loan Processing",
       description:
         "Get quick and easy loan processing with our secure platform.",
-      imageUrl: "https://thumbs.dreamstime.com/b/money-transaction-vector-logo-icon-design-buying-cash-symbol-illustration-illustrations-152825421.jpg",
+      imageUrl: "https://media.istockphoto.com/id/1140830187/vector/quick-credit-clock-and-bag-time-is-money-fast-loan-payment-period-savings-account-vector.jpg?s=612x612&w=0&k=20&c=T_B0pV62Kvh41oeSx4oC7j0JQArl0taRkApzXJfoYcw=",
     },
     {
       id: 2,
       title: "Secure Investments",
       description: "Invest securely with our range of financial products.",
-      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_sR-bI2QfhFQiagKI09tpqXCIrgyAPfML7A&s",
+      imageUrl: "https://media.istockphoto.com/id/179537236/photo/savings-protection.jpg?s=612x612&w=0&k=20&c=NOx_LIHOyQ3SwDsE67xNh13GKmNsq0ywPIsbP1AN4G8=",
     },
     {
       id: 3,
       title: "24/7 Support",
       description: "Our customer support is available around the clock.",
-      imageUrl: "",
+      imageUrl: "https://img.freepik.com/free-vector/service-24-7-concept-illustration_114360-7380.jpg",
     },
     {
       id: 4,
       title: "Instant Transfers",
       description: "Send and receive money instantly with no hassle.",
-      imageUrl: "demo",
+      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS27uAPGVR6QLCSosUaFDvO6qTqBttK2UBTdw&s",
     },
   ];
   return (
