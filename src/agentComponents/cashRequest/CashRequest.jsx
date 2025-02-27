@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { FiX, FiSend } from "react-icons/fi";
+import AuthProviderHook from "../../customHooks/AuthProviderHook";
+import UseAxiosSecure from "../../customHooks/UseAxiosSecure";
+import { moneyTransaction } from "../../../utils/moneyTransactions";
 
 const CashRequest = () => {
+  const {userData, handleError} = AuthProviderHook();
+  const axiosSecure = UseAxiosSecure();
   const [isOpen, setIsOpen] = useState(false);
   const [amount, setAmount] = useState(50000);
   const [step, setStep] = useState(1);
-  const agentBalance = 8500; // Example balance
+  const agentBalance = userData?.currentBalance; 
 
   const handleNext = () => {
     if (amount < 50000) {
@@ -15,7 +20,19 @@ const CashRequest = () => {
     setStep(2);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async() => {
+
+    let cashReqInfo = {
+      email: userData?.email,
+      name: userData?.name,
+      image: userData?.image,
+      phone: userData?.phone,
+      currentBalance: agentBalance,
+      cashRequestedAmount: amount,
+    };
+    const res = await moneyTransaction(axiosSecure, "/cashRequest", cashReqInfo).catch(handleError);
+    console.log(res);
+
     alert(`Cash request of ৳${amount} sent successfully!`);
     setIsOpen(false);
     setStep(1);

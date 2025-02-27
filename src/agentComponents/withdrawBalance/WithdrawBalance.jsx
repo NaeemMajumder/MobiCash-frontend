@@ -72,7 +72,6 @@ const WithdrawBalance = () => {
       withdrawBalance: withdrawData?.amount,
     };
     const res = await moneyTransaction(axiosSecure, "/withdrawRequest", withdrawInfo).catch(handleError);
-    console.log(res)
 
     setWithdrawData({ phone: "+880", amount: "", pin: "" });
     alert(
