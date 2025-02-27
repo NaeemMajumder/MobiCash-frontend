@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FiEye } from "react-icons/fi";
 import { TiTickOutline } from "react-icons/ti";
 import { FaBan } from "react-icons/fa";
+import { UseNewUserRequest } from "../../customHooks/tenStackQuery/UseTenSatack";
+import Loading from "../../loading/Loading";
 
 const agentRequests = [
   {
@@ -29,8 +31,16 @@ const NewAgent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const agentsPerPage = 10;
 
+  // tenstack query data fetch
+  const [newUsersRequest] = UseNewUserRequest();
+  console.log(newUsersRequest);
+
+  if (!newUsersRequest) {
+    return <Loading/>; // Prevent filter from running on undefined data
+  }
+
   // Filtering Agents
-  const filteredAgents = agentRequests.filter((agent) => {
+  const filteredAgents = newUsersRequest.filter((agent) => {
     if (searchQuery) {
       if (searchType === "name")
         return agent.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -111,14 +121,14 @@ const NewAgent = () => {
                   <td className="p-3">
                     <span
                       className={`px-2 py-1 rounded text-white ${
-                        agent.status === "Pending"
+                        agent.accountStatus === "pending"
                           ? "bg-yellow-500"
-                          : agent.status === "Approved"
+                          : agent.accountStatus === "approved"
                           ? "bg-green-500"
                           : "bg-red-500"
                       }`}
                     >
-                      {agent.status}
+                      {agent.accountStatus}
                     </span>
                   </td>
                   <td className="p-3 flex justify-center gap-2">

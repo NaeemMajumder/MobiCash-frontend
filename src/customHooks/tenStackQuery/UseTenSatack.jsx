@@ -21,7 +21,7 @@ const UseAllUsers = () => {
     const axiosSecure = UseAxiosSecure();
     const {user} = AuthProviderHook();
     const {refetch,data: allUsers}=  useQuery({
-        queryKey: ['transaction', user?.email],
+        queryKey: ['allUsers', user?.email],
         queryFn: async()=>{
             const res = await axiosSecure.get('/users');
             return res.data;
@@ -30,4 +30,18 @@ const UseAllUsers = () => {
     return [allUsers, refetch];
 }
 
-export {UseAllTransaction, UseAllUsers};
+// ten stack query for all transactions
+const UseNewUserRequest = () => {
+    const axiosSecure = UseAxiosSecure();
+    const {user} = AuthProviderHook();
+    const {refetch,data: newUsersRequest}=  useQuery({
+        queryKey: ['newUsersRequest', user?.email],
+        queryFn: async()=>{
+            const res = await axiosSecure.get('/newUsers');
+            return res.data;
+        }
+    })
+    return [newUsersRequest, refetch];
+}
+
+export {UseAllTransaction, UseAllUsers, UseNewUserRequest};
